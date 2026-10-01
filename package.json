@@ -1,0 +1,32 @@
+{
+  "name": "skill-exchange-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Skill Exchange Platform - Full Stack Skill & Service Marketplace",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev:client": "npm run dev --workspace client",
+    "dev:server": "npm run dev --workspace server",
+    "build": "npm run build --workspace client",
+    "start": "npm run start --workspace server",
+    "check:health": "npm run check:health --workspace server"
+  },
+  "keywords": [
+    "skill-exchange",
+    "marketplace",
+    "react",
+    "express",
+    "mongodb",
+    "socketio",
+    "firebase",
+    "razorpay"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}
