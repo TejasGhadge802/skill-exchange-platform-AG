@@ -6,12 +6,11 @@ yarn-error.log*
 
 # Environment files
 .env
-.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 *.env
-client/.env
-server/.env
-client/.env.local
-server/.env.local
 
 # Build outputs
 dist/
