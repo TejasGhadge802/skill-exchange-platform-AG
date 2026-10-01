@@ -41,6 +41,8 @@ services:
     envVars:
       - key: VITE_API_URL
         value: https://skill-exchange-api.onrender.com/api/v1
+      - key: VITE_SOCKET_URL
+        value: https://skill-exchange-api.onrender.com
       - key: VITE_FIREBASE_API_KEY
         sync: false
       - key: VITE_FIREBASE_AUTH_DOMAIN
