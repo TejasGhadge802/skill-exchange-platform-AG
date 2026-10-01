@@ -32,7 +32,6 @@ services:
   - type: web
     name: skill-exchange-client
     env: static
-    plan: free
     buildCommand: npm install --workspace client && npm run build --workspace client
     staticPublishPath: client/dist
     routes:
