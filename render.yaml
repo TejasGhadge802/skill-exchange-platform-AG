@@ -2,7 +2,7 @@ services:
   # API Backend Web Service
   - type: web
     name: skill-exchange-api
-    env: node
+    runtime: node
     plan: free
     buildCommand: npm install --workspace server
     startCommand: npm run start --workspace server
@@ -31,8 +31,7 @@ services:
   # React + Vite Static Site
   - type: web
     name: skill-exchange-client
-    env: static
-    plan: free
+    runtime: static
     buildCommand: npm install --workspace client && npm run build --workspace client
     staticPublishPath: client/dist
     routes:
@@ -56,4 +55,3 @@ services:
         sync: false
       - key: VITE_RAZORPAY_KEY_ID
         sync: false
-
