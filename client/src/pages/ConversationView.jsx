@@ -345,18 +345,24 @@ const ConversationView = () => {
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
               Collaborator Profile
             </h4>
-            <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-indigo-700 font-bold flex items-center justify-center text-white text-lg shadow-xs">
+            <Link
+              to={`/users/${otherParticipant?._id}`}
+              className="flex items-center gap-3.5 group hover:opacity-90 transition"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-indigo-700 font-bold flex items-center justify-center text-white text-lg shadow-xs group-hover:scale-105 transition-transform shrink-0">
                 {otherParticipant?.displayName?.charAt(0) || 'U'}
               </div>
               <div className="min-w-0">
-                <h5 className="font-bold text-slate-900 text-sm truncate">{otherParticipant?.displayName}</h5>
+                <h5 className="font-bold text-slate-900 text-sm truncate group-hover:text-indigo-600 transition flex items-center gap-1">
+                  <span>{otherParticipant?.displayName}</span>
+                  <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">View Profile ↗</span>
+                </h5>
                 <span className="text-xs text-slate-400 block truncate">{otherParticipant?.email}</span>
                 <span className="inline-block text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md mt-1">
                   {isRequester ? 'Service Provider' : 'Task Requester'}
                 </span>
               </div>
-            </div>
+            </Link>
 
             {otherParticipant?.bio && (
               <p className="text-xs text-slate-600 leading-relaxed pt-3 border-t border-slate-100">

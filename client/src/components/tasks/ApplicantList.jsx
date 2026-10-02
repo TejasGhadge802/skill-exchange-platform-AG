@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { CheckCircle, XCircle, Bookmark, Star, MessageSquare, ArrowRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { CheckCircle, XCircle, Bookmark, Star, MessageSquare, ArrowRight, ExternalLink, Globe, Linkedin, Github } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
 import Badge from '../common/Badge';
 import Alert from '../common/Alert';
 import api from '../../services/api';
@@ -61,11 +61,29 @@ const ApplicantList = ({ applications, taskId, taskStatus, onUpdate }) => {
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center text-sm">
+                <Link
+                  to={`/users/${app.providerId?._id}`}
+                  className="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center text-sm hover:scale-105 transition-transform shrink-0"
+                  title="View Candidate Profile"
+                >
                   {app.providerId?.displayName?.charAt(0) || 'P'}
-                </div>
+                </Link>
                 <div>
-                  <h4 className="font-bold text-slate-900 text-sm">{app.providerId?.displayName}</h4>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      to={`/users/${app.providerId?._id}`}
+                      className="font-bold text-slate-900 text-sm hover:text-indigo-600 transition flex items-center gap-1 group"
+                    >
+                      <span>{app.providerId?.displayName}</span>
+                      <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
+                    <Link
+                      to={`/users/${app.providerId?._id}`}
+                      className="text-[10px] font-bold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 px-2 py-0.5 rounded-md transition"
+                    >
+                      View Portfolio ↗
+                    </Link>
+                  </div>
                   <div className="flex items-center gap-2 text-xs text-slate-500 mt-0.5">
                     <span className="flex items-center gap-1 text-amber-500 font-semibold">
                       <Star className="w-3.5 h-3.5 fill-amber-400" />

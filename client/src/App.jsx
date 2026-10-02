@@ -22,6 +22,7 @@ import Classes from './pages/Classes';
 import ClassDetail from './pages/ClassDetail';
 import CreateClass from './pages/CreateClass';
 import Dashboard from './pages/Dashboard';
+import UserProfile from './pages/UserProfile';
 import AdminModeration from './pages/AdminModeration';
 import NotFound from './pages/NotFound';
 
@@ -74,6 +75,8 @@ function AppContent() {
           <Route path="/tasks/:id" element={<TaskDetail />} />
           <Route path="/classes" element={<Classes />} />
           <Route path="/classes/:id" element={<ClassDetail />} />
+          <Route path="/users/:id" element={<UserProfile />} />
+          <Route path="/profile/:id" element={<UserProfile />} />
 
           {/* Protected Member Routes */}
           <Route

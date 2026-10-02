@@ -344,18 +344,24 @@ const TaskDetail = () => {
           {/* Requester Profile Card */}
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">Posted By</h4>
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 font-black text-lg flex items-center justify-center">
+            <Link
+              to={`/users/${task.requesterId?._id}`}
+              className="flex items-center gap-3 group hover:opacity-90 transition"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 font-black text-lg flex items-center justify-center group-hover:scale-105 transition-transform shrink-0">
                 {task.requesterId?.displayName?.charAt(0) || 'U'}
               </div>
-              <div>
-                <h4 className="font-bold text-slate-900 text-sm">{task.requesterId?.displayName}</h4>
+              <div className="min-w-0">
+                <h4 className="font-bold text-slate-900 text-sm group-hover:text-indigo-600 transition flex items-center gap-1">
+                  <span className="truncate">{task.requesterId?.displayName}</span>
+                  <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">View Profile ↗</span>
+                </h4>
                 <div className="flex items-center gap-1 text-xs text-amber-500 font-semibold mt-0.5">
-                  <Star className="w-3.5 h-3.5 fill-amber-400" />
+                  <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                   {task.requesterId?.ratingAverage || 5.0} ({task.requesterId?.ratingCount || 0} reviews)
                 </div>
               </div>
-            </div>
+            </Link>
             {task.requesterId?.bio && (
               <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
                 {task.requesterId.bio}
