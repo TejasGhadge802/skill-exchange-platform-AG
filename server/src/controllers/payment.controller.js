@@ -82,6 +82,10 @@ const createClassPaymentOrder = async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Class is not approved for enrollment' });
     }
 
+    if (new Date(classDoc.scheduleDate).getTime() < Date.now()) {
+      return res.status(400).json({ success: false, message: 'This workshop has already concluded' });
+    }
+
     if (!classDoc.price || classDoc.price <= 0) {
       return res.status(400).json({ success: false, message: 'This class is free. Use the free enrollment route instead.' });
     }

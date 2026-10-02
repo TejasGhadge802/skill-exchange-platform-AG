@@ -53,8 +53,9 @@ const ClassDetail = () => {
   const isInstructor = userProfile && classDoc && classDoc.instructorId?._id === userProfile._id;
   const isEnrolled = classDoc?.isEnrolled;
   const isFull = classDoc && classDoc.currentEnrolled >= classDoc.maxCapacity;
+  const isConcluded = classDoc?.scheduleDate && new Date(classDoc.scheduleDate).getTime() < Date.now();
   const isStartingSoon = (() => {
-    if (!classDoc?.scheduleDate) return false;
+    if (!classDoc?.scheduleDate || isConcluded) return false;
     const now = Date.now();
     const start = new Date(classDoc.scheduleDate).getTime();
     return start > now && start - now <= 2 * 60 * 60 * 1000; // within 2 hours
@@ -220,7 +221,13 @@ const ClassDetail = () => {
                 </button>
               )}
 
-              {!isInstructor && classDoc.status === 'approved' && !isEnrolled && (
+              {!isInstructor && classDoc.status === 'approved' && !isEnrolled && isConcluded && (
+                <div className="w-full py-3.5 text-center text-xs font-bold text-slate-500 bg-slate-100 border border-slate-200 rounded-xl">
+                  Workshop Concluded
+                </div>
+              )}
+
+              {!isInstructor && classDoc.status === 'approved' && !isEnrolled && !isConcluded && (
                 <button
                   disabled={isFull}
                   onClick={() => {

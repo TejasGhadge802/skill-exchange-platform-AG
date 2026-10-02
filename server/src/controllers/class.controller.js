@@ -132,7 +132,10 @@ const getPublicClasses = async (req, res, next) => {
       limit = 12,
     } = req.query;
 
-    const query = { status: 'approved', scheduleDate: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) } };
+    const query = {
+      status: 'approved',
+      scheduleDate: { $gte: new Date() },
+    };
 
     if (keyword) {
       query.$or = [
@@ -219,6 +222,10 @@ const enrollInFreeClass = async (req, res, next) => {
 
     if (!classDoc) {
       return res.status(404).json({ success: false, message: 'Class not found' });
+    }
+
+    if (new Date(classDoc.scheduleDate).getTime() < Date.now()) {
+      return res.status(400).json({ success: false, message: 'This workshop has already concluded' });
     }
 
     if (classDoc.price > 0) {
