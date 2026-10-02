@@ -9,7 +9,7 @@ import {
   MapPin,
   Calendar,
   Briefcase,
-  DollarSign,
+  IndianRupee,
   ArrowLeft,
   ExternalLink,
   ShieldCheck,
@@ -144,8 +144,8 @@ const UserProfile = () => {
 
                 {profileUser.hourlyRate > 0 && (
                   <span className="flex items-center gap-1 text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-lg">
-                    <DollarSign className="w-3.5 h-3.5 text-slate-500" />
-                    <strong>₹{profileUser.hourlyRate}</strong>/hr
+                    <IndianRupee className="w-3.5 h-3.5 text-slate-500" />
+                    <strong>{profileUser.hourlyRate}</strong>/hr
                   </span>
                 )}
 
