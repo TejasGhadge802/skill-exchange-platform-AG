@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquare, X, ChevronDown, Send, Loader } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { MessageSquare, X, ChevronLeft, Loader, Search, ExternalLink, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useSocket } from '../../context/SocketContext';
 import api from '../../services/api';
+import ChatBox from './ChatBox';
 
 const FloatingChatWidget = () => {
   const { currentUser, userProfile } = useAuth();
@@ -11,61 +12,70 @@ const FloatingChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [conversations, setConversations] = useState([]);
   const [activeConv, setActiveConv] = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [newMsg, setNewMsg] = useState('');
   const [loadingConvs, setLoadingConvs] = useState(false);
-  const [sendingMsg, setSendingMsg] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [unreadCount, setUnreadCount] = useState(0);
-  const messagesEndRef = useRef(null);
 
-  // Fetch conversations when widget opens
-  useEffect(() => {
-    if (!isOpen || !currentUser) return;
-    const fetchConvs = async () => {
+  // Fetch all conversations
+  const fetchConversations = async () => {
+    if (!currentUser) return;
+    try {
       setLoadingConvs(true);
-      try {
-        const res = await api.get('/conversations/my');
-        if (res.data.success) setConversations(res.data.data);
-      } catch (e) { /* silent */ }
-      finally { setLoadingConvs(false); }
-    };
-    fetchConvs();
-  }, [isOpen, currentUser]);
+      const res = await api.get('/conversations');
+      if (res.data.success) {
+        setConversations(res.data.data || []);
+      }
+    } catch (err) {
+      console.error('Failed to load conversations:', err);
+    } finally {
+      setLoadingConvs(false);
+    }
+  };
 
-  // Fetch messages for active conversation
   useEffect(() => {
-    if (!activeConv) return;
-    const fetchMsgs = async () => {
-      try {
-        const res = await api.get(`/conversations/${activeConv._id}/messages`);
-        if (res.data.success) setMessages(res.data.data);
-      } catch (e) { /* silent */ }
-    };
-    fetchMsgs();
-  }, [activeConv]);
+    if (currentUser) {
+      fetchConversations();
+    }
+  }, [currentUser, isOpen]);
 
-  // Real-time messages via socket
+  // Listen for global custom event to open chat widget for a specific conversation
   useEffect(() => {
-    if (!socket || !activeConv) return;
-    socket.emit('join_conversation', activeConv._id);
-    const handler = (msg) => {
-      if (msg.conversationId === activeConv._id) {
-        setMessages((prev) => [...prev, msg]);
+    const handleOpenChat = (e) => {
+      const { conversationId, conversation } = e.detail || {};
+      setIsOpen(true);
+      if (conversation) {
+        setActiveConv(conversation);
+      } else if (conversationId) {
+        const found = conversations.find((c) => c._id === conversationId);
+        if (found) {
+          setActiveConv(found);
+        } else {
+          api.get(`/conversations/${conversationId}`).then((res) => {
+            if (res.data.success) setActiveConv(res.data.data);
+          }).catch(() => {});
+        }
       }
     };
-    socket.on('new_message', handler);
-    return () => {
-      socket.off('new_message', handler);
-      socket.emit('leave_conversation', activeConv._id);
-    };
-  }, [socket, activeConv]);
 
-  // Auto-scroll to bottom
+    window.addEventListener('open_chat_widget', handleOpenChat);
+    return () => window.removeEventListener('open_chat_widget', handleOpenChat);
+  }, [conversations]);
+
+  // Socket listener for new messages & updates
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    if (!socket) return;
 
-  // Unread badge: count unseen notifications
+    const handleConvUpdated = (data) => {
+      fetchConversations();
+    };
+
+    socket.on('conversation_updated', handleConvUpdated);
+    return () => {
+      socket.off('conversation_updated', handleConvUpdated);
+    };
+  }, [socket]);
+
+  // Fetch notifications for unread badge
   useEffect(() => {
     if (!currentUser) return;
     api.get('/notifications').then((res) => {
@@ -73,140 +83,213 @@ const FloatingChatWidget = () => {
     }).catch(() => {});
   }, [currentUser, isOpen]);
 
-  const handleSend = async (e) => {
-    e.preventDefault();
-    if (!newMsg.trim() || !activeConv) return;
-    setSendingMsg(true);
-    try {
-      await api.post(`/conversations/${activeConv._id}/messages`, { content: newMsg.trim() });
-      setNewMsg('');
-    } catch (e) { /* silent */ }
-    finally { setSendingMsg(false); }
-  };
-
   if (!currentUser) return null;
 
-  const otherParticipant = (conv) => {
-    if (!userProfile) return null;
-    return conv.requesterId?._id === userProfile._id ? conv.providerId : conv.requesterId;
+  const getOtherParticipant = (conv) => {
+    if (!userProfile || !conv) return null;
+    const isReq = conv.requesterId?._id === userProfile._id;
+    return isReq ? conv.providerId : conv.requesterId;
   };
 
-  return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
-      {/* Chat Panel */}
-      {isOpen && (
-        <div className="w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden"
-          style={{ height: '480px' }}>
-          {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 bg-indigo-600 text-white">
-            <div className="flex items-center gap-2">
-              <MessageSquare className="w-4 h-4" />
-              <span className="font-bold text-sm">
-                {activeConv ? (otherParticipant(activeConv)?.displayName || 'Chat') : 'Messages'}
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              {activeConv && (
-                <button onClick={() => { setActiveConv(null); setMessages([]); }}
-                  className="text-indigo-200 hover:text-white transition p-1 rounded">
-                  <ChevronDown className="w-4 h-4" />
-                </button>
-              )}
-              <button onClick={() => setIsOpen(false)} className="text-indigo-200 hover:text-white transition p-1 rounded">
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
+  const filteredConversations = conversations.filter((c) => {
+    const other = getOtherParticipant(c);
+    const name = other?.displayName || '';
+    const taskTitle = c.taskId?.title || '';
+    const query = searchQuery.toLowerCase();
+    return name.toLowerCase().includes(query) || taskTitle.toLowerCase().includes(query);
+  });
 
-          {!activeConv ? (
-            /* Conversation List */
-            <div className="flex-1 overflow-y-auto">
-              {loadingConvs ? (
-                <div className="flex items-center justify-center h-full text-slate-400">
-                  <Loader className="w-5 h-5 animate-spin" />
-                </div>
-              ) : conversations.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full text-slate-400 text-sm px-4 text-center gap-2">
-                  <MessageSquare className="w-8 h-8 text-slate-200" />
-                  <p>No conversations yet.</p>
-                  <p className="text-xs">Apply to a task to start chatting with a requester!</p>
-                </div>
-              ) : (
-                <ul className="divide-y divide-slate-100">
-                  {conversations.map((conv) => {
-                    const other = otherParticipant(conv);
-                    return (
-                      <li key={conv._id}>
-                        <button onClick={() => setActiveConv(conv)}
-                          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-50 transition text-left">
-                          <div className="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 font-bold text-sm flex items-center justify-center flex-shrink-0">
-                            {other?.displayName?.charAt(0) || '?'}
-                          </div>
-                          <div className="min-w-0">
-                            <p className="text-sm font-bold text-slate-900 truncate">{other?.displayName || 'Unknown'}</p>
-                            <p className="text-xs text-slate-400 truncate">{conv.taskId?.title || 'Task Chat'}</p>
-                          </div>
-                          <Link to={`/conversations/${conv._id}`} className="ml-auto text-xs text-indigo-500 hover:text-indigo-700 flex-shrink-0"
-                            onClick={() => setIsOpen(false)}>
-                            Open ↗
-                          </Link>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-            </div>
-          ) : (
-            /* Message View */
-            <>
-              <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-slate-50">
-                {messages.map((msg, i) => {
-                  const isOwn = msg.senderId?._id === userProfile?._id || msg.senderId === userProfile?._id;
-                  return (
-                    <div key={msg._id || i} className={`flex ${isOwn ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`max-w-[75%] px-3 py-2 rounded-2xl text-xs leading-relaxed ${
-                        isOwn ? 'bg-indigo-600 text-white rounded-br-sm' : 'bg-white border border-slate-200 text-slate-800 rounded-bl-sm'
-                      }`}>
-                        {msg.content}
-                      </div>
-                    </div>
-                  );
-                })}
-                <div ref={messagesEndRef} />
-              </div>
-              <form onSubmit={handleSend} className="flex items-center gap-2 px-3 py-2 border-t border-slate-100 bg-white">
-                <input
-                  type="text"
-                  value={newMsg}
-                  onChange={(e) => setNewMsg(e.target.value)}
-                  placeholder="Type a message..."
-                  className="flex-1 px-3 py-2 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                />
-                <button type="submit" disabled={sendingMsg || !newMsg.trim()}
-                  className="p-2 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white rounded-xl transition">
-                  <Send className="w-4 h-4" />
-                </button>
-              </form>
-            </>
-          )}
-        </div>
+  return (
+    <>
+      {/* Backdrop for mobile / tablet */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 lg:bg-transparent lg:pointer-events-none transition-opacity"
+          onClick={() => setIsOpen(false)}
+        />
       )}
 
-      {/* Floating Button */}
+      {/* Half-Screen Rectangular Chat Drawer (Right-aligned, half screen width on large displays) */}
+      <div
+        className={`fixed top-0 right-0 bottom-0 z-50 w-full sm:w-[480px] md:w-[540px] lg:w-[50vw] max-w-[650px] bg-white shadow-2xl border-l border-slate-200 flex flex-col transition-transform duration-300 ease-in-out ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        {/* Drawer Header */}
+        <div className="px-5 py-4 bg-indigo-600 text-white flex items-center justify-between shadow-md">
+          {activeConv ? (
+            <div className="flex items-center gap-3 min-w-0">
+              <button
+                onClick={() => setActiveConv(null)}
+                className="p-1.5 rounded-lg hover:bg-indigo-700/80 text-indigo-100 hover:text-white transition"
+                title="Back to all conversations"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 font-bold flex items-center justify-center text-white flex-shrink-0">
+                {getOtherParticipant(activeConv)?.displayName?.charAt(0) || 'U'}
+              </div>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <h3 className="font-bold text-sm truncate text-white">
+                    {getOtherParticipant(activeConv)?.displayName || 'Collaborator'}
+                  </h3>
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" title="Online" />
+                </div>
+                <p className="text-xs text-indigo-200 truncate">
+                  {activeConv.taskId?.title || 'Workspace'}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 rounded-xl bg-indigo-500/50">
+                <MessageSquare className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-black text-base tracking-tight text-white">Messages & Workspace Chat</h3>
+                <p className="text-xs text-indigo-200">Live communication with your collaborators</p>
+              </div>
+            </div>
+          )}
+
+          <div className="flex items-center gap-2">
+            {activeConv && (
+              <Link
+                to={`/conversations/${activeConv._id}`}
+                onClick={() => setIsOpen(false)}
+                className="p-1.5 rounded-lg hover:bg-indigo-700/80 text-indigo-100 hover:text-white transition text-xs flex items-center gap-1 font-semibold"
+                title="Go to full workspace page"
+              >
+                <ExternalLink className="w-4 h-4" />
+                <span className="hidden sm:inline">Workspace</span>
+              </Link>
+            )}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-2 rounded-xl hover:bg-indigo-700/80 text-indigo-100 hover:text-white transition"
+              aria-label="Close Chat"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Drawer Body */}
+        <div className="flex-1 flex flex-col min-h-0 bg-slate-50">
+          {activeConv ? (
+            /* Active Chat Window using full ChatBox */
+            <div className="flex-1 flex flex-col min-h-0 p-4">
+              <ChatBox
+                conversationId={activeConv._id}
+                currentUserId={userProfile?._id}
+              />
+            </div>
+          ) : (
+            /* Conversation List */
+            <div className="flex-1 flex flex-col min-h-0">
+              {/* Search Bar */}
+              <div className="p-4 bg-white border-b border-slate-200">
+                <div className="relative">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search by user or task name..."
+                    className="w-full pl-9 pr-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"
+                  />
+                </div>
+              </div>
+
+              {/* Conversations */}
+              <div className="flex-1 overflow-y-auto divide-y divide-slate-100">
+                {loadingConvs ? (
+                  <div className="flex flex-col items-center justify-center h-64 text-slate-400 gap-2">
+                    <Loader className="w-6 h-6 animate-spin text-indigo-600" />
+                    <p className="text-xs">Loading conversations...</p>
+                  </div>
+                ) : filteredConversations.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center h-64 text-slate-400 text-center px-6 gap-3">
+                    <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-500 flex items-center justify-center">
+                      <MessageSquare className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-700">No conversations yet</p>
+                      <p className="text-xs text-slate-400 mt-1">
+                        Apply to tasks or accept proposals to start chatting with collaborators!
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  filteredConversations.map((conv) => {
+                    const other = getOtherParticipant(conv);
+                    const isRequester = conv.requesterId?._id === userProfile?._id;
+
+                    return (
+                      <button
+                        key={conv._id}
+                        onClick={() => setActiveConv(conv)}
+                        className="w-full p-4 flex items-center gap-3.5 hover:bg-white hover:shadow-xs transition text-left group"
+                      >
+                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-indigo-700 text-white font-black text-base flex items-center justify-center shadow-xs flex-shrink-0 group-hover:scale-105 transition-transform">
+                          {other?.displayName?.charAt(0) || 'U'}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-2 mb-1">
+                            <h4 className="font-bold text-sm text-slate-900 truncate">
+                              {other?.displayName || 'User'}
+                            </h4>
+                            <span className="text-[10px] font-semibold text-slate-400 flex-shrink-0">
+                              {conv.lastMessageAt
+                                ? new Date(conv.lastMessageAt).toLocaleDateString(undefined, {
+                                    month: 'short',
+                                    day: 'numeric',
+                                  })
+                                : ''}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md truncate max-w-[160px]">
+                              {conv.taskId?.title || 'Task'}
+                            </span>
+                            <span className="text-[10px] text-slate-400">
+                              • {isRequester ? 'Provider' : 'Requester'}
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-500 truncate">
+                            {conv.lastMessage || 'No messages yet. Click to start chatting!'}
+                          </p>
+                        </div>
+                      </button>
+                    );
+                  })
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Floating Widget Button (Bottom Right Corner) */}
       <button
         onClick={() => setIsOpen((o) => !o)}
-        className="w-14 h-14 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-xl shadow-indigo-500/30 flex items-center justify-center transition-transform hover:scale-105 active:scale-95 relative"
+        className="fixed bottom-6 right-6 z-40 px-4 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-2xl shadow-indigo-600/40 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95 group"
         aria-label="Open chat"
       >
-        {isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
-        {!isOpen && unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
-            {unreadCount > 9 ? '9+' : unreadCount}
-          </span>
-        )}
+        <div className="relative">
+          <MessageSquare className="w-5 h-5" />
+          {unreadCount > 0 && !isOpen && (
+            <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-rose-500 text-white text-[9px] font-black rounded-full flex items-center justify-center animate-pulse">
+              {unreadCount > 9 ? '9+' : unreadCount}
+            </span>
+          )}
+        </div>
+        <span className="font-bold text-xs tracking-wide hidden sm:inline">
+          {isOpen ? 'Close Chat' : 'Messages'}
+        </span>
       </button>
-    </div>
+    </>
   );
 };
 
