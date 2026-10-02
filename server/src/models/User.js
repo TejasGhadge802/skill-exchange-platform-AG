@@ -52,6 +52,22 @@ const userSchema = new mongoose.Schema(
       default: '',
       trim: true,
     },
+    portfolioUrl: {
+      type: String,
+      default: '',
+    },
+    linkedinUrl: {
+      type: String,
+      default: '',
+    },
+    githubUrl: {
+      type: String,
+      default: '',
+    },
+    twitterUrl: {
+      type: String,
+      default: '',
+    },
     organizationId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Organization',

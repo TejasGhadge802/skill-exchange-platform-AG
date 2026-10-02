@@ -297,6 +297,69 @@ const getMyEnrolledClasses = async (req, res, next) => {
   }
 };
 
+// Get upcoming class reminders (classes starting within the next 2 hours)
+const getUpcomingClassReminders = async (req, res, next) => {
+  try {
+    const now = new Date();
+    const twoHoursFromNow = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+
+    const enrollments = await Enrollment.find({
+      studentId: req.user._id,
+      status: 'enrolled',
+    }).populate('classId');
+
+    const upcoming = enrollments.filter((e) => {
+      if (!e.classId) return false;
+      const scheduleDate = new Date(e.classId.scheduleDate);
+      return scheduleDate >= now && scheduleDate <= twoHoursFromNow;
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: upcoming,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Enroll after paid class payment confirmation
+const enrollAfterPayment = async (req, res, next) => {
+  try {
+    const { classId } = req.body;
+
+    const classDoc = await Class.findById(classId);
+    if (!classDoc) {
+      return res.status(404).json({ success: false, message: 'Class not found' });
+    }
+
+    const enrollment = await Enrollment.findOneAndUpdate(
+      { classId: classDoc._id, studentId: req.user._id },
+      { status: 'enrolled' },
+      { upsert: true, new: true }
+    );
+
+    await Class.findByIdAndUpdate(classDoc._id, { $inc: { currentEnrolled: 1 } });
+
+    await createNotification({
+      recipientId: classDoc.instructorId,
+      senderId: req.user._id,
+      type: 'class_enrolled',
+      title: 'New Paid Enrollment',
+      message: `${req.user.displayName} has enrolled in "${classDoc.title}" after completing payment.`,
+      linkUrl: `/classes/${classDoc._id}`,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: 'Enrolled successfully after payment!',
+      data: enrollment,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createClassDraft,
   updateClass,
@@ -306,5 +369,7 @@ module.exports = {
   enrollInFreeClass,
   getMyHostedClasses,
   getMyEnrolledClasses,
+  getUpcomingClassReminders,
+  enrollAfterPayment,
 };
 

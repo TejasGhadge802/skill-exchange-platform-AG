@@ -78,12 +78,20 @@ const createClassPaymentOrder = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Class not found' });
     }
 
+    if (classDoc.status !== 'approved') {
+      return res.status(400).json({ success: false, message: 'Class is not approved for enrollment' });
+    }
+
+    if (!classDoc.price || classDoc.price <= 0) {
+      return res.status(400).json({ success: false, message: 'This class is free. Use the free enrollment route instead.' });
+    }
+
     if (classDoc.currentEnrolled >= classDoc.maxCapacity) {
       return res.status(400).json({ success: false, message: 'Class is already at full capacity' });
     }
 
     const order = await createRazorpayOrder({
-      amount: classDoc.price,
+      amount: classDoc.price * 100, // convert to paise
       currency: 'INR',
       receipt: `cls_${classDoc._id}_${Date.now()}`,
     });
@@ -105,7 +113,7 @@ const createClassPaymentOrder = async (req, res, next) => {
         orderId: order.id,
         amount: order.amount,
         currency: order.currency,
-        keyId: config.razorpay.keyId || 'rzp_test_mock_key',
+        keyId: config.razorpay.keyId || process.env.RAZORPAY_KEY_ID || 'rzp_test_mock_key',
         paymentId: payment._id,
       },
     });
@@ -161,6 +169,25 @@ const verifyPayment = async (req, res, next) => {
           type: 'payment_completed',
           title: 'Escrow Payment Secured!',
           message: `Requester deposited ₹${payment.amount} in escrow for "${task.title}". The task is now officially In Progress!`,
+          linkUrl: `/tasks/${task._id}`,
+        });
+
+        // Notify both provider and requester to leave reviews
+        await createNotification({
+          recipientId: payment.payeeId,
+          senderId: payment.payerId,
+          type: 'review_requested',
+          title: 'Leave Your Review',
+          message: `Payment has been confirmed for task "${task.title}". Please leave your review!`,
+          linkUrl: `/tasks/${task._id}`,
+        });
+
+        await createNotification({
+          recipientId: payment.payerId,
+          senderId: payment.payeeId,
+          type: 'review_requested',
+          title: 'Leave Your Review',
+          message: `Payment has been confirmed for task "${task.title}". Please leave your review!`,
           linkUrl: `/tasks/${task._id}`,
         });
       }
