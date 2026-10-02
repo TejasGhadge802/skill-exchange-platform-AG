@@ -68,6 +68,20 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    customLinks: [
+      {
+        title: {
+          type: String,
+          trim: true,
+          default: '',
+        },
+        url: {
+          type: String,
+          trim: true,
+          default: '',
+        },
+      },
+    ],
     organizationId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Organization',

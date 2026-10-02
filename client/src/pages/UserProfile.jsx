@@ -17,6 +17,7 @@ import {
   MessageSquare,
   User,
   Clock,
+  Link as LinkIcon,
 } from 'lucide-react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -80,7 +81,8 @@ const UserProfile = () => {
     profileUser.portfolioUrl ||
     profileUser.linkedinUrl ||
     profileUser.githubUrl ||
-    profileUser.twitterUrl;
+    profileUser.twitterUrl ||
+    (profileUser.customLinks && profileUser.customLinks.length > 0);
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
@@ -235,6 +237,28 @@ const UserProfile = () => {
                   <ExternalLink className="w-3 h-3 text-sky-400 group-hover:translate-x-0.5 transition-transform" />
                 </a>
               )}
+
+              {profileUser.customLinks &&
+                profileUser.customLinks.map((custom, index) => {
+                  if (!custom.url && !custom.title) return null;
+                  const linkHref = custom.url.startsWith('http')
+                    ? custom.url
+                    : `https://${custom.url}`;
+
+                  return (
+                    <a
+                      key={index}
+                      href={linkHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-violet-700 bg-violet-50 hover:bg-violet-100 border border-violet-200/80 rounded-xl transition shadow-2xs group"
+                    >
+                      <LinkIcon className="w-4 h-4 text-violet-600" />
+                      <span>{custom.title || 'Project Link'}</span>
+                      <ExternalLink className="w-3 h-3 text-violet-400 group-hover:translate-x-0.5 transition-transform" />
+                    </a>
+                  );
+                })}
             </div>
           </div>
         )}

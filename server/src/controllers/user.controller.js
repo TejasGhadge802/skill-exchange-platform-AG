@@ -5,7 +5,7 @@ const getUserProfileById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id).select(
-      'displayName email photoURL role bio skills hourlyRate location ratingAverage ratingCount earningsTotal portfolioUrl linkedinUrl githubUrl twitterUrl createdAt'
+      'displayName email photoURL role bio skills hourlyRate location ratingAverage ratingCount earningsTotal portfolioUrl linkedinUrl githubUrl twitterUrl customLinks createdAt'
     );
 
     if (!user) {
@@ -46,6 +46,7 @@ const updateMyProfile = async (req, res, next) => {
       linkedinUrl,
       githubUrl,
       twitterUrl,
+      customLinks,
     } = req.body;
 
     const updates = {};
@@ -58,6 +59,19 @@ const updateMyProfile = async (req, res, next) => {
     if (linkedinUrl !== undefined) updates.linkedinUrl = linkedinUrl;
     if (githubUrl !== undefined) updates.githubUrl = githubUrl;
     if (twitterUrl !== undefined) updates.twitterUrl = twitterUrl;
+    if (customLinks !== undefined) {
+      // Ensure customLinks is an array and max 3 items
+      const validLinks = Array.isArray(customLinks)
+        ? customLinks
+            .filter((l) => l && (l.title?.trim() || l.url?.trim()))
+            .slice(0, 3)
+            .map((l) => ({
+              title: l.title ? l.title.trim() : '',
+              url: l.url ? l.url.trim() : '',
+            }))
+        : [];
+      updates.customLinks = validLinks;
+    }
 
     const user = await User.findByIdAndUpdate(
       req.user._id,
