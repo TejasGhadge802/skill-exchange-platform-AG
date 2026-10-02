@@ -10,6 +10,7 @@ import {
 } from '../config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import api from '../services/api';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const AuthContext = createContext();
 
@@ -33,12 +34,22 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    // Safety fallback: if Firebase auth doesn't respond within 2.5s, unblock the UI
+    const safetyTimer = setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      clearTimeout(safetyTimer);
       setCurrentUser(user);
       if (user) {
-        const token = await user.getIdToken();
-        localStorage.setItem('skill_exchange_token', token);
-        await fetchUserProfile();
+        try {
+          const token = await user.getIdToken();
+          localStorage.setItem('skill_exchange_token', token);
+          await fetchUserProfile();
+        } catch (e) {
+          console.warn('[Auth Token Error]:', e);
+        }
       } else {
         localStorage.removeItem('skill_exchange_token');
         setUserProfile(null);
@@ -46,7 +57,10 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      clearTimeout(safetyTimer);
+      unsubscribe();
+    };
   }, []);
 
   const loginWithEmail = async (email, password) => {
@@ -142,6 +156,16 @@ export const AuthProvider = ({ children }) => {
     refreshProfile,
   };
 
-  return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {loading ? (
+        <div className="min-h-screen flex items-center justify-center bg-slate-50">
+          <LoadingSpinner message="Connecting to Skill Exchange..." />
+        </div>
+      ) : (
+        children
+      )}
+    </AuthContext.Provider>
+  );
 };
 
