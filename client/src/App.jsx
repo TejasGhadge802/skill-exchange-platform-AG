@@ -6,6 +6,7 @@ import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import SkipToContent from './components/common/SkipToContent';
 import LoadingSpinner from './components/common/LoadingSpinner';
+import FloatingChatWidget from './components/chat/FloatingChatWidget';
 
 // Pages
 import Home from './pages/Home';
@@ -132,6 +133,7 @@ function AppContent() {
       </main>
 
       <Footer />
+      <FloatingChatWidget />
     </div>
   );
 }

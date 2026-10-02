@@ -53,6 +53,12 @@ const ClassDetail = () => {
   const isInstructor = userProfile && classDoc && classDoc.instructorId?._id === userProfile._id;
   const isEnrolled = classDoc?.isEnrolled;
   const isFull = classDoc && classDoc.currentEnrolled >= classDoc.maxCapacity;
+  const isStartingSoon = (() => {
+    if (!classDoc?.scheduleDate) return false;
+    const now = Date.now();
+    const start = new Date(classDoc.scheduleDate).getTime();
+    return start > now && start - now <= 2 * 60 * 60 * 1000; // within 2 hours
+  })();
 
   // Submit draft for moderation
   const handleSubmitForApproval = async () => {
@@ -77,6 +83,33 @@ const ClassDetail = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {successMsg && <Alert type="success" message={successMsg} onClose={() => setSuccessMsg(null)} />}
       {error && <Alert type="error" message={error} onClose={() => setError(null)} />}
+
+      {/* Class Starting Soon Reminder Banner */}
+      {isEnrolled && isStartingSoon && (
+        <div className="flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-2xl px-5 py-3.5">
+          <span className="text-xl">🔔</span>
+          <div>
+            <p className="text-sm font-bold text-amber-900">This workshop starts in less than 2 hours!</p>
+            <p className="text-xs text-amber-700 mt-0.5">
+              Scheduled for{' '}
+              <strong>
+                {new Date(classDoc.scheduleDate).toLocaleTimeString(undefined, {
+                  hour: '2-digit', minute: '2-digit',
+                })}
+              </strong>
+              {classDoc.meetingUrl && (
+                <>
+                  {' — '}
+                  <a href={classDoc.meetingUrl} target="_blank" rel="noopener noreferrer"
+                    className="font-bold text-indigo-600 hover:text-indigo-800 underline">
+                    Join Now ↗
+                  </a>
+                </>
+              )}
+            </p>
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column: Workshop Details */}

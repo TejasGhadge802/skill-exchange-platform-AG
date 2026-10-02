@@ -11,12 +11,14 @@ import {
   ShieldAlert,
   ArrowRight,
   PlusCircle,
+  Settings,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import Badge from '../components/common/Badge';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import ProfileSettingsTab from '../components/profile/ProfileSettingsTab';
 
 const Dashboard = () => {
   const { userProfile, refreshProfile } = useAuth();
@@ -108,7 +110,7 @@ const Dashboard = () => {
             (r) => (
               <button
                 key={r}
-                onClick={() => handleRoleSwitch(r)}
+                onClick={() => setActiveTab(r)}
                 className={`flex-1 sm:flex-initial px-4 py-2 text-xs font-bold rounded-xl capitalize transition ${
                   activeTab === r
                     ? 'bg-white text-indigo-600 shadow-sm'
@@ -119,8 +121,23 @@ const Dashboard = () => {
               </button>
             )
           )}
+          <button
+            onClick={() => setActiveTab('profile')}
+            className={`flex-1 sm:flex-initial px-4 py-2 text-xs font-bold rounded-xl capitalize transition flex items-center gap-1 ${
+              activeTab === 'profile'
+                ? 'bg-white text-indigo-600 shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Settings className="w-3.5 h-3.5" /> Profile
+          </button>
         </div>
       </div>
+
+      {/* Profile Settings Tab */}
+      {activeTab === 'profile' && (
+        <ProfileSettingsTab userProfile={userProfile} onProfileUpdated={refreshProfile} />
+      )}
 
       {/* Role-Specific Metric Cards */}
       {activeTab === 'requester' && stats?.requesterStats && (

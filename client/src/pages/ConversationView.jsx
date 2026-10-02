@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MessageSquare, ArrowLeft, ShieldCheck, User } from 'lucide-react';
+import { MessageSquare, ArrowLeft, ShieldCheck, CheckCircle2, CreditCard, Bell } from 'lucide-react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { useSocket } from '../context/SocketContext';
 import ChatBox from '../components/chat/ChatBox';
 import TermsNegotiationCard from '../components/chat/TermsNegotiationCard';
 import Badge from '../components/common/Badge';
 import Alert from '../components/common/Alert';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import ReviewModal from '../components/reviews/ReviewModal';
 
 const ConversationView = () => {
   const { id } = useParams();
   const { currentUser, userProfile } = useAuth();
+  const { socket } = useSocket();
 
   const [conversation, setConversation] = useState(null);
   const [terms, setTerms] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [reviewModalOpen, setReviewModalOpen] = useState(false);
+  const [taskActionLoading, setTaskActionLoading] = useState(false);
+  const [taskActionMsg, setTaskActionMsg] = useState(null);
 
   const fetchConversationData = async () => {
     try {
@@ -49,6 +55,51 @@ const ConversationView = () => {
   const isRequester = userProfile && conversation && conversation.requesterId?._id === userProfile._id;
   const isProvider = userProfile && conversation && conversation.providerId?._id === userProfile._id;
   const otherParticipant = isRequester ? conversation?.providerId : conversation?.requesterId;
+
+  // Listen for review_requested notification via socket (for provider)
+  useEffect(() => {
+    if (!socket) return;
+    const handler = (notification) => {
+      if (notification.type === 'review_requested') {
+        setReviewModalOpen(true);
+      }
+    };
+    socket.on('notification', handler);
+    return () => socket.off('notification', handler);
+  }, [socket]);
+
+  // Provider: Request task completion
+  const handleRequestCompletion = async () => {
+    try {
+      setTaskActionLoading(true);
+      const res = await api.post(`/tasks/${conversation.taskId._id}/request-completion`);
+      if (res.data.success) {
+        setTaskActionMsg('Completion request sent to requester!');
+        fetchConversationData();
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to request completion');
+    } finally {
+      setTaskActionLoading(false);
+    }
+  };
+
+  // Requester: Confirm task completion
+  const handleConfirmCompletion = async () => {
+    try {
+      setTaskActionLoading(true);
+      const res = await api.post(`/tasks/${conversation.taskId._id}/confirm-completion`);
+      if (res.data.success) {
+        setTaskActionMsg('Task marked as completed!');
+        await fetchConversationData();
+        setReviewModalOpen(true); // requester sees review modal
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to confirm completion');
+    } finally {
+      setTaskActionLoading(false);
+    }
+  };
 
   // Handle Razorpay Escrow Checkout
   const handleInitiatePayment = async () => {
@@ -156,7 +207,46 @@ const ConversationView = () => {
           onClose={() => setPaymentSuccess(false)}
         />
       )}
+      {taskActionMsg && (
+        <Alert type="success" message={taskActionMsg} onClose={() => setTaskActionMsg(null)} />
+      )}
       {error && <Alert type="error" message={error} onClose={() => setError(null)} />}
+
+      {/* Task Status Action Card */}
+      {conversation?.taskId?.status === 'in_progress' && (
+        <div className="bg-white rounded-2xl border border-indigo-100 p-4 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2 text-sm text-slate-700">
+            <ShieldCheck className="w-4 h-4 text-indigo-500" />
+            <span>Task is <strong className="text-indigo-600">In Progress</strong></span>
+            {conversation.taskId.completionRequestedByProvider && !conversation.taskId.completionConfirmedByRequester && (
+              <span className="ml-2 text-xs font-semibold text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full flex items-center gap-1">
+                <Bell className="w-3 h-3" /> Provider marked complete — awaiting your confirmation
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            {isProvider && !conversation.taskId.completionRequestedByProvider && (
+              <button onClick={handleRequestCompletion} disabled={taskActionLoading}
+                className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 rounded-xl transition">
+                <CheckCircle2 className="w-4 h-4" />
+                {taskActionLoading ? 'Sending...' : 'Mark Task as Complete'}
+              </button>
+            )}
+            {isProvider && conversation.taskId.completionRequestedByProvider && (
+              <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl">
+                ✓ Completion Requested
+              </span>
+            )}
+            {isRequester && conversation.taskId.completionRequestedByProvider && !conversation.taskId.completionConfirmedByRequester && (
+              <button onClick={handleConfirmCompletion} disabled={taskActionLoading}
+                className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 rounded-xl transition">
+                <CheckCircle2 className="w-4 h-4" />
+                {taskActionLoading ? 'Confirming...' : 'Confirm Task Completed'}
+              </button>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Grid: Left Chat Box, Right Terms & Milestones */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -199,6 +289,18 @@ const ConversationView = () => {
           </div>
         </div>
       </div>
+      {/* Mandatory Review Modal — triggers after payment OR task completion */}
+      <ReviewModal
+        isOpen={reviewModalOpen}
+        onClose={() => setReviewModalOpen(false)}
+        taskId={conversation?.taskId?._id}
+        taskTitle={conversation?.taskId?.title}
+        mandatory
+        onReviewed={() => {
+          setReviewModalOpen(false);
+          fetchConversationData();
+        }}
+      />
     </div>
   );
 };

@@ -29,10 +29,16 @@ const EnrollmentModal = ({ isOpen, onClose, classDoc, onEnrolled }) => {
       setLoading(true);
       setError(null);
 
-      const res = await api.post('/payments/order/class', { classId: classDoc._id });
+      const res = await api.post(`/classes/${classDoc._id}/pay`, { classId: classDoc._id });
       if (!res.data.success) throw new Error(res.data.message);
 
       const { orderId, amount, currency, keyId } = res.data.data;
+
+      const confirmEnrollment = async (rzOrderId) => {
+        await api.post(`/classes/${classDoc._id}/enroll-paid`, { classId: classDoc._id });
+        onEnrolled();
+        onClose();
+      };
 
       // Launch Razorpay Checkout
       if (window.Razorpay) {
@@ -45,17 +51,9 @@ const EnrollmentModal = ({ isOpen, onClose, classDoc, onEnrolled }) => {
           order_id: orderId,
           handler: async (response) => {
             try {
-              const verifyRes = await api.post('/payments/verify', {
-                razorpayOrderId: response.razorpay_order_id || orderId,
-                razorpayPaymentId: response.razorpay_payment_id || `pay_mock_${Date.now()}`,
-                razorpaySignature: response.razorpay_signature || 'mock_sig',
-              });
-              if (verifyRes.data.success) {
-                onEnrolled();
-                onClose();
-              }
+              await confirmEnrollment(response.razorpay_order_id || orderId);
             } catch (vErr) {
-              setError(vErr.response?.data?.message || 'Payment verification failed');
+              setError(vErr.response?.data?.message || 'Enrollment confirmation failed');
             }
           },
           theme: { color: '#4f46e5' },
@@ -64,16 +62,8 @@ const EnrollmentModal = ({ isOpen, onClose, classDoc, onEnrolled }) => {
         const rzp = new window.Razorpay(options);
         rzp.open();
       } else {
-        // Fallback verification for test mock mode
-        const verifyRes = await api.post('/payments/verify', {
-          razorpayOrderId: orderId,
-          razorpayPaymentId: `pay_mock_${Date.now()}`,
-          razorpaySignature: 'mock_sig',
-        });
-        if (verifyRes.data.success) {
-          onEnrolled();
-          onClose();
-        }
+        // Fallback mock for dev
+        await confirmEnrollment(orderId);
       }
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Payment checkout error');
