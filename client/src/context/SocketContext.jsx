@@ -22,19 +22,7 @@ export const SocketProvider = ({ children }) => {
     }
 
     const token = localStorage.getItem('skill_exchange_token') || currentUser.uid;
-    const getSocketUrl = () => {
-      if (import.meta.env.VITE_SOCKET_URL) return import.meta.env.VITE_SOCKET_URL;
-      if (import.meta.env.VITE_API_URL) {
-        try {
-          const url = new URL(import.meta.env.VITE_API_URL, window.location.origin);
-          return url.origin;
-        } catch {
-          return import.meta.env.VITE_API_URL.replace(/\/api(\/v\d+)?\/?$/, '');
-        }
-      }
-      return window.location.hostname === 'localhost' ? 'http://localhost:5000' : window.location.origin;
-    };
-    const socketUrl = getSocketUrl();
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
 
     const newSocket = io(socketUrl, {
       auth: { token },

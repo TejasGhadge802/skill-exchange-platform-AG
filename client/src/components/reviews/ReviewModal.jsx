@@ -3,9 +3,8 @@ import Modal from '../common/Modal';
 import StarRating from './StarRating';
 import Alert from '../common/Alert';
 import api from '../../services/api';
-import { Star } from 'lucide-react';
 
-const ReviewModal = ({ isOpen, onClose, taskId, taskTitle, onReviewed, mandatory = false }) => {
+const ReviewModal = ({ isOpen, onClose, taskId, taskTitle, onReviewed }) => {
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(false);
@@ -35,15 +34,7 @@ const ReviewModal = ({ isOpen, onClose, taskId, taskTitle, onReviewed, mandatory
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Leave a Verified Review" mandatory={mandatory}>
-      {mandatory && (
-        <div className="mb-4 flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-xl p-3.5">
-          <Star className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
-          <p className="text-xs text-amber-800 font-medium">
-            Both you and your collaborator must leave a verified review to complete this task. This cannot be skipped.
-          </p>
-        </div>
-      )}
+    <Modal isOpen={isOpen} onClose={onClose} title="Leave a Verified Review">
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && <Alert type="error" message={error} />}
 
@@ -60,7 +51,7 @@ const ReviewModal = ({ isOpen, onClose, taskId, taskTitle, onReviewed, mandatory
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-slate-800 mb-1">Feedback & Experience <span className="text-red-500">*</span></label>
+          <label className="block text-xs font-bold text-slate-800 mb-1">Feedback & Experience</label>
           <textarea
             required
             rows={4}
@@ -72,15 +63,13 @@ const ReviewModal = ({ isOpen, onClose, taskId, taskTitle, onReviewed, mandatory
         </div>
 
         <div className="pt-3 flex items-center justify-end gap-3 border-t border-slate-100">
-          {!mandatory && (
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg"
-            >
-              Cancel
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg"
+          >
+            Cancel
+          </button>
           <button
             type="submit"
             disabled={loading}

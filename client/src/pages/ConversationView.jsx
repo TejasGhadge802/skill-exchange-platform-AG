@@ -8,7 +8,6 @@ import TermsNegotiationCard from '../components/chat/TermsNegotiationCard';
 import Badge from '../components/common/Badge';
 import Alert from '../components/common/Alert';
 import LoadingSpinner from '../components/common/LoadingSpinner';
-import ReviewModal from '../components/reviews/ReviewModal';
 
 const ConversationView = () => {
   const { id } = useParams();
@@ -19,7 +18,6 @@ const ConversationView = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
-  const [reviewModalOpen, setReviewModalOpen] = useState(false);
 
   const fetchConversationData = async () => {
     try {
@@ -86,9 +84,7 @@ const ConversationView = () => {
               });
               if (verifyRes.data.success) {
                 setPaymentSuccess(true);
-                await fetchConversationData();
-                // Prompt review immediately after task goes in_progress
-                setReviewModalOpen(true);
+                fetchConversationData();
               }
             } catch (vErr) {
               setError(vErr.response?.data?.message || 'Payment verification failed');
@@ -203,19 +199,6 @@ const ConversationView = () => {
           </div>
         </div>
       </div>
-
-      {/* Mandatory Review Modal — triggers after payment */}
-      <ReviewModal
-        isOpen={reviewModalOpen}
-        onClose={() => setReviewModalOpen(false)}
-        taskId={conversation?.taskId?._id}
-        taskTitle={conversation?.taskId?.title}
-        mandatory
-        onReviewed={() => {
-          setReviewModalOpen(false);
-          fetchConversationData();
-        }}
-      />
     </div>
   );
 };

@@ -2,7 +2,7 @@ services:
   # API Backend Web Service
   - type: web
     name: skill-exchange-api
-    runtime: node
+    env: node
     plan: free
     buildCommand: npm install --workspace server
     startCommand: npm run start --workspace server
@@ -31,7 +31,8 @@ services:
   # React + Vite Static Site
   - type: web
     name: skill-exchange-client
-    runtime: static
+    env: static
+    plan: free
     buildCommand: npm install --workspace client && npm run build --workspace client
     staticPublishPath: client/dist
     routes:
@@ -41,8 +42,6 @@ services:
     envVars:
       - key: VITE_API_URL
         value: https://skill-exchange-api.onrender.com/api/v1
-      - key: VITE_SOCKET_URL
-        value: https://skill-exchange-api.onrender.com
       - key: VITE_FIREBASE_API_KEY
         sync: false
       - key: VITE_FIREBASE_AUTH_DOMAIN
@@ -57,3 +56,4 @@ services:
         sync: false
       - key: VITE_RAZORPAY_KEY_ID
         sync: false
+
