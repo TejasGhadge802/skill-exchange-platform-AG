@@ -363,6 +363,25 @@ const confirmTaskCompletion = async (req, res, next) => {
   }
 };
 
+// Get tasks where current user is the assigned provider
+const getProviderTasks = async (req, res, next) => {
+  try {
+    const tasks = await Task.find({
+      assignedProviderId: req.user._id,
+      status: { $in: ['in_progress', 'completed'] },
+    })
+      .populate('requesterId', 'displayName photoURL')
+      .sort({ updatedAt: -1 });
+
+    return res.status(200).json({
+      success: true,
+      data: tasks,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createTaskDraft,
   updateTask,
@@ -371,6 +390,7 @@ module.exports = {
   getMarketplaceTasks,
   getTaskById,
   getMyTasks,
+  getProviderTasks,
   requestTaskCompletion,
   confirmTaskCompletion,
 };

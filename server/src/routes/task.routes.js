@@ -7,6 +7,7 @@ const {
   getMarketplaceTasks,
   getTaskById,
   getMyTasks,
+  getProviderTasks,
   requestTaskCompletion,
   confirmTaskCompletion,
 } = require('../controllers/task.controller');
@@ -16,6 +17,7 @@ const router = express.Router();
 
 router.get('/', getMarketplaceTasks);
 router.get('/my/posted', verifyFirebaseToken, getMyTasks);
+router.get('/my/provider', verifyFirebaseToken, getProviderTasks);
 router.get('/:id', getTaskById);
 router.post('/draft', verifyFirebaseToken, createTaskDraft);
 router.put('/:id', verifyFirebaseToken, updateTask);

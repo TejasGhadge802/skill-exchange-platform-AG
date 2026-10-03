@@ -25,6 +25,7 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState(userProfile?.role || 'requester');
   const [stats, setStats] = useState(null);
   const [myTasks, setMyTasks] = useState([]);
+  const [myProviderTasks, setMyProviderTasks] = useState([]);
   const [myApplications, setMyApplications] = useState([]);
   const [myClasses, setMyClasses] = useState([]);
   const [myEnrolledClasses, setMyEnrolledClasses] = useState([]);
@@ -40,9 +41,10 @@ const Dashboard = () => {
     const fetchDashboardData = async () => {
       try {
         setLoading(true);
-        const [statsRes, tasksRes, appsRes, classesRes, enrolledRes] = await Promise.all([
+        const [statsRes, tasksRes, providerTasksRes, appsRes, classesRes, enrolledRes] = await Promise.all([
           api.get('/users/dashboard/stats'),
           api.get('/tasks/my/posted'),
+          api.get('/tasks/my/provider').catch(() => ({ data: { data: [] } })),
           api.get('/applications/my/submitted'),
           api.get('/classes/my/hosted').catch(() => ({ data: { data: [] } })),
           api.get('/classes/my/enrolled').catch(() => ({ data: { data: [] } })),
@@ -50,6 +52,7 @@ const Dashboard = () => {
 
         if (statsRes.data.success) setStats(statsRes.data.data);
         if (tasksRes.data.success) setMyTasks(tasksRes.data.data);
+        if (providerTasksRes.data.success) setMyProviderTasks(providerTasksRes.data.data);
         if (appsRes.data.success) setMyApplications(appsRes.data.data);
         if (classesRes.data.success) setMyClasses(classesRes.data.data);
         if (enrolledRes.data.success) setMyEnrolledClasses(enrolledRes.data.data);
@@ -202,6 +205,52 @@ const Dashboard = () => {
                       <Link
                         to={`/tasks/${t._id}`}
                         className="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg"
+                      >
+                        <ArrowRight className="w-4 h-4" />
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Tasks I'm Currently Doing as Provider */}
+          <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4">
+            <div className="flex items-center gap-2">
+              <Briefcase className="w-5 h-5 text-violet-600" />
+              <h3 className="font-extrabold text-slate-900 text-lg">Services I'm Doing</h3>
+            </div>
+
+            {myProviderTasks.length === 0 ? (
+              <p className="text-xs text-slate-400 py-4 text-center">
+                You're not currently working on any tasks as a provider.
+              </p>
+            ) : (
+              <div className="divide-y divide-slate-100">
+                {myProviderTasks.map((t) => (
+                  <div key={t._id} className="py-3.5 flex items-center justify-between gap-4">
+                    <div className="space-y-1">
+                      <Link to={`/tasks/${t._id}`} className="font-bold text-slate-900 text-sm hover:text-violet-600">
+                        {t.title}
+                      </Link>
+                      <div className="flex items-center gap-2 text-xs text-slate-500">
+                        {t.requesterId?.displayName && (
+                          <>
+                            <span>by {t.requesterId.displayName}</span>
+                            <span>•</span>
+                          </>
+                        )}
+                        <span>₹{t.agreedPrice || t.budgetMax}</span>
+                        <span>•</span>
+                        <span>{t.category}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Badge variant={t.status} />
+                      <Link
+                        to={`/tasks/${t._id}`}
+                        className="p-1.5 text-slate-400 hover:text-violet-600 rounded-lg"
                       >
                         <ArrowRight className="w-4 h-4" />
                       </Link>
