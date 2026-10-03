@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Shield, Lock, CreditCard, Heart } from 'lucide-react';
+import { Handshake, Shield, Lock, CreditCard, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -10,7 +10,7 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-white">
               <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
-                <Sparkles className="w-4 h-4" />
+                <Handshake className="w-4 h-4" />
               </div>
               <span className="text-lg font-bold">SkillExchange</span>
             </div>
