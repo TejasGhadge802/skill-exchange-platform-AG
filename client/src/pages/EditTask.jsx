@@ -99,38 +99,38 @@ const EditTask = () => {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
       <div>
-        <h1 className="text-3xl font-black text-slate-950 tracking-tight flex items-center gap-2.5">
-          <Edit className="w-8 h-8 text-indigo-600" />
+        <h1 className="text-3xl font-black text-slate-950 dark:text-white tracking-tight flex items-center gap-2.5">
+          <Edit className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
           Edit Task Draft
         </h1>
-        <p className="text-xs text-slate-500 mt-1">
+        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
           Modify draft scope or address moderation feedback before submitting again.
         </p>
       </div>
 
       {error && <Alert type="error" message={error} onClose={() => setError(null)} />}
 
-      <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
         <div>
-          <label className="block text-xs font-bold text-slate-800 mb-1">Task Title *</label>
+          <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">Task Title *</label>
           <input
             type="text"
             name="title"
             required
             value={formData.title}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+            className="w-full px-4 py-2.5 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
           />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold text-slate-800 mb-1">Category *</label>
+            <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">Category *</label>
             <select
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              className="w-full px-4 py-2.5 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             >
               {CATEGORIES.map((c) => (
                 <option key={c} value={c}>
@@ -141,12 +141,12 @@ const EditTask = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-800 mb-1">Work Mode</label>
+            <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">Work Mode</label>
             <select
               name="workMode"
               value={formData.workMode}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              className="w-full px-4 py-2.5 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             >
               <option value="remote">Remote</option>
               <option value="onsite">On-site</option>
@@ -156,59 +156,59 @@ const EditTask = () => {
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-slate-800 mb-1">Detailed Description *</label>
+          <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">Detailed Description *</label>
           <textarea
             name="description"
             required
             rows={6}
             value={formData.description}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+            className="w-full px-4 py-2.5 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-slate-800 mb-1">Required Skills (comma-separated)</label>
+          <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">Required Skills (comma-separated)</label>
           <input
             type="text"
             name="requiredSkills"
             value={formData.requiredSkills}
             onChange={handleChange}
-            className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+            className="w-full px-4 py-2.5 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
           />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold text-slate-800 mb-1">Min Budget (₹ INR)</label>
+            <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">Min Budget (₹ INR)</label>
             <input
               type="number"
               name="budgetMin"
               value={formData.budgetMin}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              className="w-full px-4 py-2.5 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-800 mb-1">Max Budget (₹ INR) *</label>
+            <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">Max Budget (₹ INR) *</label>
             <input
               type="number"
               name="budgetMax"
               required
               value={formData.budgetMax}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              className="w-full px-4 py-2.5 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             />
           </div>
         </div>
 
-        <div className="pt-6 border-t border-slate-100 flex flex-wrap items-center justify-end gap-3">
+        <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-end gap-3">
           <button
             type="button"
             disabled={saving}
             onClick={() => handleUpdate(false)}
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition"
+            className="inline-flex items-center gap-1.5 px-5 py-2.5 text-xs font-bold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl transition"
           >
             <Save className="w-4 h-4" />
             Update Draft

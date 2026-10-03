@@ -77,14 +77,14 @@ const TermsNegotiationCard = ({
   const hasCurrentUserAccepted = isRequester ? terms.requesterAccepted : terms.providerAccepted;
 
   return (
-    <div className="bg-gradient-to-br from-indigo-50/50 via-white to-slate-50 border border-indigo-100 rounded-2xl p-5 shadow-sm space-y-4">
-      <div className="flex items-center justify-between pb-3 border-b border-indigo-100/60">
+    <div className="bg-gradient-to-br from-indigo-50/50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950 border border-indigo-100 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
+      <div className="flex items-center justify-between pb-3 border-b border-indigo-100/60 dark:border-slate-800">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center">
             <FileText className="w-4 h-4" />
           </div>
           <div>
-            <h4 className="font-bold text-slate-900 text-sm">Contract Terms & Milestones</h4>
+            <h4 className="font-bold text-slate-900 dark:text-white text-sm">Contract Terms & Milestones</h4>
             <span className="text-[10px] text-slate-400 font-medium">Version {terms.version}</span>
           </div>
         </div>
@@ -92,25 +92,25 @@ const TermsNegotiationCard = ({
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-        <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-2xs">
+        <div className="bg-white dark:bg-slate-800/80 p-3 rounded-xl border border-slate-100 dark:border-slate-700 shadow-2xs">
           <span className="text-[11px] font-semibold text-slate-400">Total Price</span>
-          <div className="text-lg font-black text-slate-900">₹{terms.price}</div>
+          <div className="text-lg font-black text-slate-900 dark:text-white">₹{terms.price}</div>
         </div>
 
-        <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-2xs">
+        <div className="bg-white dark:bg-slate-800/80 p-3 rounded-xl border border-slate-100 dark:border-slate-700 shadow-2xs">
           <span className="text-[11px] font-semibold text-slate-400">Duration</span>
-          <div className="text-lg font-black text-slate-900">{terms.durationDays} Days</div>
+          <div className="text-lg font-black text-slate-900 dark:text-white">{terms.durationDays} Days</div>
         </div>
 
-        <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-2xs col-span-2 sm:col-span-1">
+        <div className="bg-white dark:bg-slate-800/80 p-3 rounded-xl border border-slate-100 dark:border-slate-700 shadow-2xs col-span-2 sm:col-span-1">
           <span className="text-[11px] font-semibold text-slate-400">Currency</span>
-          <div className="text-lg font-black text-indigo-600">INR (₹)</div>
+          <div className="text-lg font-black text-indigo-600 dark:text-indigo-400">INR (₹)</div>
         </div>
       </div>
 
       {terms.notes && (
-        <div className="p-3 bg-white/80 rounded-xl border border-slate-100 text-xs text-slate-600">
-          <span className="font-semibold text-slate-800">Notes:</span> {terms.notes}
+        <div className="p-3 bg-white/80 dark:bg-slate-800/80 rounded-xl border border-slate-100 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300">
+          <span className="font-semibold text-slate-800 dark:text-slate-100">Notes:</span> {terms.notes}
         </div>
       )}
 
@@ -119,8 +119,8 @@ const TermsNegotiationCard = ({
         <div
           className={`flex items-center gap-2 p-2.5 rounded-xl border ${
             terms.requesterAccepted
-              ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-              : 'bg-slate-50 text-slate-500 border-slate-200'
+              ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
+              : 'bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700'
           }`}
         >
           <CheckCircle2 className={`w-4 h-4 ${terms.requesterAccepted ? 'text-emerald-500' : 'text-slate-400'}`} />
@@ -130,8 +130,8 @@ const TermsNegotiationCard = ({
         <div
           className={`flex items-center gap-2 p-2.5 rounded-xl border ${
             terms.providerAccepted
-              ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-              : 'bg-slate-50 text-slate-500 border-slate-200'
+              ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
+              : 'bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700'
           }`}
         >
           <CheckCircle2 className={`w-4 h-4 ${terms.providerAccepted ? 'text-emerald-500' : 'text-slate-400'}`} />
@@ -144,9 +144,9 @@ const TermsNegotiationCard = ({
         {!isMutuallyAccepted && (
           <button
             onClick={() => setModalOpen(true)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg transition"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg transition"
           >
-            <Edit3 className="w-3.5 h-3.5 text-indigo-600" />
+            <Edit3 className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
             Propose Counter-Terms
           </button>
         )}
@@ -174,8 +174,8 @@ const TermsNegotiationCard = ({
         )}
 
         {isMutuallyAccepted && task?.status === 'in_progress' && (
-          <div className="w-full flex items-center justify-center gap-2 p-2 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-xl text-xs font-bold">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+          <div className="w-full flex items-center justify-center gap-2 p-2 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 rounded-xl text-xs font-bold">
+            <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             Payment of ₹{terms.price} Secured in Escrow. Work is in progress!
           </div>
         )}
@@ -188,45 +188,45 @@ const TermsNegotiationCard = ({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Agreed Price (₹ INR)</label>
+              <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">Agreed Price (₹ INR)</label>
               <input
                 type="number"
                 required
                 min={1}
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Duration (Days)</label>
+              <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">Duration (Days)</label>
               <input
                 type="number"
                 required
                 min={1}
                 value={durationDays}
                 onChange={(e) => setDurationDays(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-800 mb-1">Scope & Deliverable Notes</label>
+            <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">Scope & Deliverable Notes</label>
             <textarea
               rows={3}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Outline deliverables, deadlines, revision limits..."
-              className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             />
           </div>
 
-          <div className="pt-3 flex items-center justify-end gap-2 border-t border-slate-100">
+          <div className="pt-3 flex items-center justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
             <button
               type="button"
               onClick={() => setModalOpen(false)}
-              className="px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg"
+              className="px-3 py-2 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
             >
               Cancel
             </button>

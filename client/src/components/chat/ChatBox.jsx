@@ -90,17 +90,17 @@ const ChatBox = ({ conversationId, currentUserId }) => {
   };
 
   return (
-    <div className="flex flex-col h-[500px] sm:h-[600px] bg-slate-50/50 rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+    <div className="flex flex-col h-[500px] sm:h-[600px] bg-slate-50/50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
       <MessageList messages={messages} currentUserId={currentUserId} />
       <TypingIndicator typingUsers={typingUsers} />
 
-      <form onSubmit={handleSend} className="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
+      <form onSubmit={handleSend} className="p-3 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2">
         <input
           type="text"
           value={text}
           onChange={handleTyping}
           placeholder="Type a message or discuss milestone terms..."
-          className="flex-1 px-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"
+          className="flex-1 px-4 py-2.5 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:focus:bg-slate-900 transition"
         />
         <button
           type="submit"

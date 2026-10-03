@@ -188,24 +188,24 @@ const ConversationView = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* Top Banner / Navigation */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
         <div className="flex items-center gap-3">
           <Link
             to={`/tasks/${conversation.taskId?._id}`}
-            className="p-2 text-slate-500 hover:text-indigo-600 hover:bg-slate-100 rounded-xl transition"
+            className="p-2 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition"
             title="Back to Task"
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-black text-slate-900 line-clamp-1">
+              <h1 className="text-xl font-black text-slate-900 dark:text-white line-clamp-1">
                 {conversation.taskId?.title}
               </h1>
               <Badge variant={conversation.taskId?.status} />
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Workspace with <strong className="text-slate-800">{otherParticipant?.displayName}</strong> ({isRequester ? 'Provider' : 'Requester'})
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              Workspace with <strong className="text-slate-800 dark:text-slate-200">{otherParticipant?.displayName}</strong> ({isRequester ? 'Provider' : 'Requester'})
             </p>
           </div>
         </div>
@@ -222,7 +222,7 @@ const ConversationView = () => {
 
           <Link
             to={`/tasks/${conversation.taskId?._id}`}
-            className="text-xs font-bold text-slate-700 hover:text-indigo-600 bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-xl transition"
+            className="text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 px-3.5 py-2 rounded-xl transition"
           >
             View Task Details
           </Link>
@@ -244,17 +244,17 @@ const ConversationView = () => {
 
       {/* Task Status Action Card */}
       {conversation?.taskId?.status === 'in_progress' && (
-        <div className="bg-white rounded-3xl border border-indigo-100 p-5 shadow-xs flex flex-wrap items-center justify-between gap-4">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-indigo-100 dark:border-indigo-900/50 p-5 shadow-xs flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+            <div className="w-10 h-10 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-sm font-bold text-slate-900">Task is Active & In Progress</h3>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">Task is Active & In Progress</h3>
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               </div>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                 {isProvider
                   ? 'Deliver your work and mark the task as completed when finished.'
                   : 'Collaborate with your provider and confirm completion once satisfied.'}
@@ -276,7 +276,7 @@ const ConversationView = () => {
             )}
 
             {isProvider && conversation.taskId.completionRequestedByProvider && (
-              <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3.5 py-2 rounded-xl flex items-center gap-1.5">
+              <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 px-3.5 py-2 rounded-xl flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4" /> Completion Requested (Waiting for Requester)
               </span>
             )}
@@ -295,9 +295,9 @@ const ConversationView = () => {
 
             <button
               onClick={openHalfScreenChat}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl transition"
             >
-              <MessageSquare className="w-4 h-4 text-indigo-600" />
+              <MessageSquare className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
               Chat
             </button>
           </div>
@@ -326,7 +326,7 @@ const ConversationView = () => {
               <MessageSquare className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="font-black text-base">Direct Real-Time Chat</h3>
+              <h3 className="font-black text-base text-white">Direct Real-Time Chat</h3>
               <p className="text-xs text-indigo-100 mt-1 leading-relaxed">
                 Need to discuss deliverables, files, or milestones? Open the half-screen chat drawer anytime.
               </p>
@@ -341,7 +341,7 @@ const ConversationView = () => {
           </div>
 
           {/* Participant Info */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-4">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
               Collaborator Profile
             </h4>
@@ -353,19 +353,19 @@ const ConversationView = () => {
                 {otherParticipant?.displayName?.charAt(0) || 'U'}
               </div>
               <div className="min-w-0">
-                <h5 className="font-bold text-slate-900 text-sm truncate group-hover:text-indigo-600 transition flex items-center gap-1">
+                <h5 className="font-bold text-slate-900 dark:text-white text-sm truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition flex items-center gap-1">
                   <span>{otherParticipant?.displayName}</span>
-                  <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">View Profile ↗</span>
+                  <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-1.5 py-0.5 rounded">View Profile ↗</span>
                 </h5>
                 <span className="text-xs text-slate-400 block truncate">{otherParticipant?.email}</span>
-                <span className="inline-block text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md mt-1">
+                <span className="inline-block text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded-md mt-1">
                   {isRequester ? 'Service Provider' : 'Task Requester'}
                 </span>
               </div>
             </Link>
 
             {otherParticipant?.bio && (
-              <p className="text-xs text-slate-600 leading-relaxed pt-3 border-t border-slate-100">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed pt-3 border-t border-slate-100 dark:border-slate-800">
                 {otherParticipant.bio}
               </p>
             )}

@@ -6,28 +6,6 @@
   body {
     @apply bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-indigo-500 selection:text-white transition-colors duration-200;
   }
-
-  /* Universal dark mode typography and card readability */
-  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
-    color: #f8fafc;
-  }
-
-  .dark p {
-    color: #cbd5e1;
-  }
-
-  .dark input,
-  .dark select,
-  .dark textarea {
-    background-color: #0f172a;
-    color: #f8fafc;
-    border-color: #334155;
-  }
-
-  .dark input::placeholder,
-  .dark textarea::placeholder {
-    color: #64748b;
-  }
 }
 
 .skip-to-content {
