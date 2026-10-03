@@ -2,81 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Base layer: dark mode global typography ── */
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 selection:bg-indigo-500 selection:text-white;
-    @apply dark:bg-slate-950 dark:text-slate-100;
+    @apply bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-indigo-500 selection:text-white transition-colors duration-200;
   }
 
-  /* Headings — crisp white in dark mode */
-  h1, h2, h3, h4, h5, h6 {
-    @apply dark:text-slate-50;
+  /* Universal dark mode typography and card readability */
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    color: #f8fafc;
   }
 
-  /* Body copy */
-  p {
-    @apply dark:text-slate-300;
+  .dark p {
+    color: #cbd5e1;
   }
 
-  /* Form labels */
-  label {
-    @apply dark:text-slate-200;
+  .dark input,
+  .dark select,
+  .dark textarea {
+    background-color: #0f172a;
+    color: #f8fafc;
+    border-color: #334155;
   }
 
-  /* Inputs, textareas, selects */
-  input, textarea, select {
-    @apply dark:bg-slate-800 dark:text-slate-100 dark:border-slate-600 dark:placeholder-slate-500;
-  }
-
-  /* Dividers */
-  hr {
-    @apply dark:border-slate-700;
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    color: #64748b;
   }
 }
 
-/* ── Component layer: automatic dark surface remapping ── */
-/* These rules flip common Tailwind utility classes when the `dark` class is
-   on <html>, so existing pages look great without touching every component. */
-@layer components {
-  /* White cards → dark slate cards */
-  .dark .bg-white {
-    background-color: theme('colors.slate.900');
-  }
-
-  /* Slate border softening */
-  .dark .border-slate-200 {
-    border-color: theme('colors.slate.700');
-  }
-  .dark .border-slate-100 {
-    border-color: theme('colors.slate.800');
-  }
-
-  /* Text colour remapping (dark → bright) */
-  .dark .text-slate-950 { color: theme('colors.slate.50'); }
-  .dark .text-slate-900 { color: theme('colors.slate.50'); }
-  .dark .text-slate-800 { color: theme('colors.slate.100'); }
-  .dark .text-slate-700 { color: theme('colors.slate.200'); }
-  .dark .text-slate-600 { color: theme('colors.slate.300'); }
-  .dark .text-slate-500 { color: theme('colors.slate.400'); }
-  .dark .text-slate-400 { color: theme('colors.slate.500'); }
-
-  /* Light backgrounds → subtle dark surfaces */
-  .dark .bg-slate-50  { background-color: theme('colors.slate.950'); }
-  .dark .bg-slate-100 { background-color: theme('colors.slate.800'); }
-  .dark .bg-slate-50\/50 { background-color: rgb(15 23 42 / 0.5); }
-
-  /* Indigo light tints → dark indigo tints */
-  .dark .bg-indigo-50    { background-color: theme('colors.indigo.950'); }
-  .dark .bg-indigo-50\/80 { background-color: rgb(30 27 75 / 0.8); }
-
-  /* Divide lines */
-  .dark .divide-slate-100 > * + * {
-    border-color: theme('colors.slate.800');
-  }
-}
-
-/* ── Skip-to-content accessibility link ── */
 .skip-to-content {
   position: absolute;
   top: -40px;
@@ -91,3 +44,5 @@
 .skip-to-content:focus {
   top: 0;
 }
+
+

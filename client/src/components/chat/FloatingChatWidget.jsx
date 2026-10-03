@@ -111,7 +111,7 @@ const FloatingChatWidget = () => {
 
       {/* Half-Screen Rectangular Chat Drawer (Right-aligned, half screen width on large displays) */}
       <div
-        className={`fixed top-0 right-0 bottom-0 z-50 w-full sm:w-[480px] md:w-[540px] lg:w-[50vw] max-w-[650px] bg-white shadow-2xl border-l border-slate-200 flex flex-col transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 bottom-0 z-50 w-full sm:w-[480px] md:w-[540px] lg:w-[50vw] max-w-[650px] bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-200 dark:border-slate-800 flex flex-col transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -176,7 +176,7 @@ const FloatingChatWidget = () => {
         </div>
 
         {/* Drawer Body */}
-        <div className="flex-1 flex flex-col min-h-0 bg-slate-50">
+        <div className="flex-1 flex flex-col min-h-0 bg-slate-50 dark:bg-slate-950">
           {activeConv ? (
             /* Active Chat Window using full ChatBox */
             <div className="flex-1 flex flex-col min-h-0 p-4">
@@ -189,7 +189,7 @@ const FloatingChatWidget = () => {
             /* Conversation List */
             <div className="flex-1 flex flex-col min-h-0">
               {/* Search Bar */}
-              <div className="p-4 bg-white border-b border-slate-200">
+              <div className="p-4 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
                 <div className="relative">
                   <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
@@ -197,13 +197,13 @@ const FloatingChatWidget = () => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search by user or task name..."
-                    className="w-full pl-9 pr-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"
+                    className="w-full pl-9 pr-4 py-2 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:focus:bg-slate-900 transition"
                   />
                 </div>
               </div>
 
               {/* Conversations */}
-              <div className="flex-1 overflow-y-auto divide-y divide-slate-100">
+              <div className="flex-1 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800">
                 {loadingConvs ? (
                   <div className="flex flex-col items-center justify-center h-64 text-slate-400 gap-2">
                     <Loader className="w-6 h-6 animate-spin text-indigo-600" />
@@ -211,12 +211,12 @@ const FloatingChatWidget = () => {
                   </div>
                 ) : filteredConversations.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-64 text-slate-400 text-center px-6 gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-500 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-500 flex items-center justify-center">
                       <MessageSquare className="w-6 h-6" />
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-slate-700">No conversations yet</p>
-                      <p className="text-xs text-slate-400 mt-1">
+                      <p className="text-sm font-bold text-slate-700 dark:text-slate-300">No conversations yet</p>
+                      <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
                         Apply to tasks or accept proposals to start chatting with collaborators!
                       </p>
                     </div>
@@ -230,14 +230,14 @@ const FloatingChatWidget = () => {
                       <button
                         key={conv._id}
                         onClick={() => setActiveConv(conv)}
-                        className="w-full p-4 flex items-center gap-3.5 hover:bg-white hover:shadow-xs transition text-left group"
+                        className="w-full p-4 flex items-center gap-3.5 hover:bg-white dark:hover:bg-slate-900 hover:shadow-xs transition text-left group"
                       >
                         <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-indigo-700 text-white font-black text-base flex items-center justify-center shadow-xs flex-shrink-0 group-hover:scale-105 transition-transform">
                           {other?.displayName?.charAt(0) || 'U'}
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between gap-2 mb-1">
-                            <h4 className="font-bold text-sm text-slate-900 truncate">
+                            <h4 className="font-bold text-sm text-slate-900 dark:text-slate-100 truncate">
                               {other?.displayName || 'User'}
                             </h4>
                             <span className="text-[10px] font-semibold text-slate-400 flex-shrink-0">
@@ -250,14 +250,14 @@ const FloatingChatWidget = () => {
                             </span>
                           </div>
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md truncate max-w-[160px]">
+                            <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded-md truncate max-w-[160px]">
                               {conv.taskId?.title || 'Task'}
                             </span>
                             <span className="text-[10px] text-slate-400">
                               • {isRequester ? 'Provider' : 'Requester'}
                             </span>
                           </div>
-                          <p className="text-xs text-slate-500 truncate">
+                          <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
                             {conv.lastMessage || 'No messages yet. Click to start chatting!'}
                           </p>
                         </div>

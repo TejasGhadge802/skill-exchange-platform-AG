@@ -67,13 +67,13 @@ const Tasks = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h1 className="text-3xl font-black text-slate-950 tracking-tight flex items-center gap-2.5">
-            <Briefcase className="w-8 h-8 text-indigo-600" />
+          <h1 className="text-3xl font-black text-slate-950 dark:text-white tracking-tight flex items-center gap-2.5">
+            <Briefcase className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
             Task Marketplace
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Explore active tasks, submit competitive bids, and collaborate with verified requesters.
           </p>
         </div>
@@ -100,21 +100,21 @@ const Tasks = () => {
 
         {/* Tasks Container */}
         <div className="lg:col-span-3 space-y-6">
-          <div className="flex items-center justify-between text-xs text-slate-500">
+          <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
             <span>
-              Showing <strong className="text-slate-900">{tasks.length}</strong> of{' '}
-              <strong className="text-slate-900">{pagination.total}</strong> published tasks
+              Showing <strong className="text-slate-900 dark:text-slate-100">{tasks.length}</strong> of{' '}
+              <strong className="text-slate-900 dark:text-slate-100">{pagination.total}</strong> published tasks
             </span>
 
             <div className="flex items-center gap-2">
-              <span className="font-semibold">Sort:</span>
+              <span className="font-semibold text-slate-700 dark:text-slate-300">Sort:</span>
               <select
                 value={`${filters.sortBy}-${filters.sortOrder}`}
                 onChange={(e) => {
                   const [sortBy, sortOrder] = e.target.value.split('-');
                   setFilters((prev) => ({ ...prev, sortBy, sortOrder, page: 1 }));
                 }}
-                className="px-2.5 py-1 text-xs border border-slate-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="px-2.5 py-1 text-xs border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
               >
                 <option value="createdAt-desc">Newest First</option>
                 <option value="budgetMax-desc">Highest Budget</option>
@@ -126,12 +126,12 @@ const Tasks = () => {
           {loading ? (
             <LoadingSpinner message="Loading marketplace tasks..." />
           ) : tasks.length === 0 ? (
-            <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-500 space-y-3">
-              <p className="font-bold text-slate-800">No matching tasks found</p>
-              <p className="text-xs text-slate-400">Try widening your filters or search keywords</p>
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-12 text-center text-slate-500 dark:text-slate-400 space-y-3">
+              <p className="font-bold text-slate-800 dark:text-slate-200">No matching tasks found</p>
+              <p className="text-xs text-slate-400 dark:text-slate-500">Try widening your filters or search keywords</p>
               <button
                 onClick={handleResetFilters}
-                className="px-4 py-2 text-xs font-bold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg"
+                className="px-4 py-2 text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 rounded-lg transition"
               >
                 Clear all filters
               </button>
@@ -146,24 +146,24 @@ const Tasks = () => {
 
           {/* Pagination */}
           {pagination.pages > 1 && (
-            <div className="pt-8 border-t border-slate-200 flex items-center justify-between">
+            <div className="pt-8 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
               <button
                 disabled={filters.page <= 1}
                 onClick={() => setFilters((prev) => ({ ...prev, page: prev.page - 1 }))}
-                className="inline-flex items-center gap-1 px-3 py-2 text-xs font-bold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-40"
+                className="inline-flex items-center gap-1 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40"
               >
                 <ChevronLeft className="w-4 h-4" /> Previous
               </button>
 
-              <span className="text-xs text-slate-500">
-                Page <strong className="text-slate-900">{pagination.page}</strong> of{' '}
-                <strong className="text-slate-900">{pagination.pages}</strong>
+              <span className="text-xs text-slate-500 dark:text-slate-400">
+                Page <strong className="text-slate-900 dark:text-slate-100">{pagination.page}</strong> of{' '}
+                <strong className="text-slate-900 dark:text-slate-100">{pagination.pages}</strong>
               </span>
 
               <button
                 disabled={filters.page >= pagination.pages}
                 onClick={() => setFilters((prev) => ({ ...prev, page: prev.page + 1 }))}
-                className="inline-flex items-center gap-1 px-3 py-2 text-xs font-bold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-40"
+                className="inline-flex items-center gap-1 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40"
               >
                 Next <ChevronRight className="w-4 h-4" />
               </button>

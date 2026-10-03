@@ -20,15 +20,15 @@ const TaskFilter = ({ filters, setFilters, onReset }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
-      <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-        <h4 className="font-bold text-slate-900 text-sm flex items-center gap-2">
-          <Filter className="w-4 h-4 text-indigo-600" />
+    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+      <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+        <h4 className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+          <Filter className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
           Filter & Search
         </h4>
         <button
           onClick={onReset}
-          className="text-xs text-slate-400 hover:text-indigo-600 flex items-center gap-1 transition"
+          className="text-xs text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-1 transition"
         >
           <RotateCcw className="w-3 h-3" /> Reset
         </button>
@@ -36,7 +36,7 @@ const TaskFilter = ({ filters, setFilters, onReset }) => {
 
       {/* Keyword Search */}
       <div>
-        <label className="block text-xs font-semibold text-slate-700 mb-1">Search Keywords</label>
+        <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Search Keywords</label>
         <div className="relative">
           <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" />
           <input
@@ -45,19 +45,19 @@ const TaskFilter = ({ filters, setFilters, onReset }) => {
             value={filters.keyword || ''}
             onChange={handleChange}
             placeholder="e.g. React, logo, translation..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
       </div>
 
       {/* Category */}
       <div>
-        <label className="block text-xs font-semibold text-slate-700 mb-1">Category</label>
+        <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Category</label>
         <select
           name="category"
           value={filters.category || ''}
           onChange={handleChange}
-          className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
           <option value="">All Categories</option>
           {CATEGORIES.map((cat) => (
@@ -70,12 +70,12 @@ const TaskFilter = ({ filters, setFilters, onReset }) => {
 
       {/* Work Mode */}
       <div>
-        <label className="block text-xs font-semibold text-slate-700 mb-1">Work Mode</label>
+        <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Work Mode</label>
         <select
           name="workMode"
           value={filters.workMode || ''}
           onChange={handleChange}
-          className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
           <option value="">Any Work Mode</option>
           <option value="remote">Remote</option>
@@ -87,25 +87,25 @@ const TaskFilter = ({ filters, setFilters, onReset }) => {
       {/* Budget Filter */}
       <div className="grid grid-cols-2 gap-2">
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1">Min Budget (₹)</label>
+          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Min Budget (₹)</label>
           <input
             type="number"
             name="minBudget"
             value={filters.minBudget || ''}
             onChange={handleChange}
             placeholder="0"
-            className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1">Max Budget (₹)</label>
+          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Max Budget (₹)</label>
           <input
             type="number"
             name="maxBudget"
             value={filters.maxBudget || ''}
             onChange={handleChange}
             placeholder="50000"
-            className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
       </div>

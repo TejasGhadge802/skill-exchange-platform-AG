@@ -58,13 +58,13 @@ const Classes = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h1 className="text-3xl font-black text-slate-950 tracking-tight flex items-center gap-2.5">
-            <BookOpen className="w-8 h-8 text-indigo-600" />
+          <h1 className="text-3xl font-black text-slate-950 dark:text-white tracking-tight flex items-center gap-2.5">
+            <BookOpen className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
             Live Workshops & Classes
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Join interactive live sessions hosted by vetted domain instructors. Upgrade your skillset.
           </p>
         </div>
@@ -93,20 +93,20 @@ const Classes = () => {
 
         {/* Classes List */}
         <div className="lg:col-span-3 space-y-6">
-          <div className="text-xs text-slate-500">
-            Showing <strong className="text-slate-900">{classes.length}</strong> of{' '}
-            <strong className="text-slate-900">{pagination.total}</strong> scheduled workshops
+          <div className="text-xs text-slate-500 dark:text-slate-400">
+            Showing <strong className="text-slate-900 dark:text-slate-100">{classes.length}</strong> of{' '}
+            <strong className="text-slate-900 dark:text-slate-100">{pagination.total}</strong> scheduled workshops
           </div>
 
           {loading ? (
             <LoadingSpinner message="Loading upcoming classes..." />
           ) : classes.length === 0 ? (
-            <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-500 space-y-3">
-              <p className="font-bold text-slate-800">No scheduled workshops match your criteria</p>
-              <p className="text-xs text-slate-400">Try adjusting your filters</p>
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-12 text-center text-slate-500 dark:text-slate-400 space-y-3">
+              <p className="font-bold text-slate-800 dark:text-slate-200">No scheduled workshops match your criteria</p>
+              <p className="text-xs text-slate-400 dark:text-slate-500">Try adjusting your filters</p>
               <button
                 onClick={handleResetFilters}
-                className="px-4 py-2 text-xs font-bold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg"
+                className="px-4 py-2 text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 rounded-lg transition"
               >
                 Clear filters
               </button>
@@ -121,24 +121,24 @@ const Classes = () => {
 
           {/* Pagination */}
           {pagination.pages > 1 && (
-            <div className="pt-8 border-t border-slate-200 flex items-center justify-between">
+            <div className="pt-8 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
               <button
                 disabled={filters.page <= 1}
                 onClick={() => setFilters((prev) => ({ ...prev, page: prev.page - 1 }))}
-                className="inline-flex items-center gap-1 px-3 py-2 text-xs font-bold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-40"
+                className="inline-flex items-center gap-1 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40"
               >
                 <ChevronLeft className="w-4 h-4" /> Previous
               </button>
 
-              <span className="text-xs text-slate-500">
-                Page <strong className="text-slate-900">{pagination.page}</strong> of{' '}
-                <strong className="text-slate-900">{pagination.pages}</strong>
+              <span className="text-xs text-slate-500 dark:text-slate-400">
+                Page <strong className="text-slate-900 dark:text-slate-100">{pagination.page}</strong> of{' '}
+                <strong className="text-slate-900 dark:text-slate-100">{pagination.pages}</strong>
               </span>
 
               <button
                 disabled={filters.page >= pagination.pages}
                 onClick={() => setFilters((prev) => ({ ...prev, page: prev.page + 1 }))}
-                className="inline-flex items-center gap-1 px-3 py-2 text-xs font-bold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-40"
+                className="inline-flex items-center gap-1 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40"
               >
                 Next <ChevronRight className="w-4 h-4" />
               </button>
