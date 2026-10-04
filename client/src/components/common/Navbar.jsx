@@ -40,12 +40,12 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Brand Logo */}
           <div className="flex items-center gap-8">
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 group-hover:scale-105 transition">
+            <Link to="/" className="navbar-logo-link flex items-center gap-2 group">
+              <div className="navbar-logo-icon w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 group-hover:scale-105 transition">
                 <Handshake className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 via-indigo-950 to-indigo-700 dark:from-slate-100 dark:via-indigo-300 dark:to-indigo-400 bg-clip-text text-transparent">
+                <span className="navbar-logo-text text-xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 via-indigo-950 to-indigo-700 dark:from-slate-100 dark:via-indigo-300 dark:to-indigo-400 bg-clip-text text-transparent">
                   SkillExchange
                 </span>
               </div>

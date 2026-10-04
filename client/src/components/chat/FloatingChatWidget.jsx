@@ -116,17 +116,17 @@ const FloatingChatWidget = () => {
         }`}
       >
         {/* Drawer Header */}
-        <div className="px-5 py-4 bg-indigo-600 text-white flex items-center justify-between shadow-md">
+        <div className="chat-drawer-header px-5 py-4 bg-indigo-600 text-white flex items-center justify-between shadow-md">
           {activeConv ? (
             <div className="flex items-center gap-3 min-w-0">
               <button
                 onClick={() => setActiveConv(null)}
-                className="p-1.5 rounded-lg hover:bg-indigo-700/80 text-indigo-100 hover:text-white transition"
+                className="chat-header-action-btn p-1.5 rounded-lg hover:bg-indigo-700/80 text-indigo-100 hover:text-white transition"
                 title="Back to all conversations"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 font-bold flex items-center justify-center text-white flex-shrink-0">
+              <div className="chat-avatar-other w-10 h-10 rounded-xl bg-white/10 border border-white/20 font-bold flex items-center justify-center text-white flex-shrink-0">
                 {getOtherParticipant(activeConv)?.displayName?.charAt(0) || 'U'}
               </div>
               <div className="min-w-0">
@@ -136,7 +136,7 @@ const FloatingChatWidget = () => {
                   </h3>
                   <span className="w-2 h-2 rounded-full bg-emerald-400" title="Online" />
                 </div>
-                <p className="text-xs text-indigo-200 truncate">
+                <p className="chat-header-subtitle text-xs text-indigo-200 truncate">
                   {activeConv.taskId?.title || 'Workspace'}
                 </p>
               </div>
@@ -148,7 +148,7 @@ const FloatingChatWidget = () => {
               </div>
               <div>
                 <h3 className="font-black text-base tracking-tight text-white">Messages & Workspace Chat</h3>
-                <p className="text-xs text-indigo-200">Live communication with your collaborators</p>
+                <p className="chat-header-subtitle text-xs text-indigo-200">Live communication with your collaborators</p>
               </div>
             </div>
           )}
@@ -158,7 +158,7 @@ const FloatingChatWidget = () => {
               <Link
                 to={`/conversations/${activeConv._id}`}
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-lg hover:bg-indigo-700/80 text-indigo-100 hover:text-white transition text-xs flex items-center gap-1 font-semibold"
+                className="chat-header-action-btn p-1.5 rounded-lg hover:bg-indigo-700/80 text-indigo-100 hover:text-white transition text-xs flex items-center gap-1 font-semibold"
                 title="Go to full workspace page"
               >
                 <ExternalLink className="w-4 h-4" />
@@ -167,7 +167,7 @@ const FloatingChatWidget = () => {
             )}
             <button
               onClick={() => setIsOpen(false)}
-              className="p-2 rounded-xl hover:bg-indigo-700/80 text-indigo-100 hover:text-white transition"
+              className="chat-header-action-btn p-2 rounded-xl hover:bg-indigo-700/80 text-indigo-100 hover:text-white transition"
               aria-label="Close Chat"
             >
               <X className="w-5 h-5" />
@@ -232,7 +232,7 @@ const FloatingChatWidget = () => {
                         onClick={() => setActiveConv(conv)}
                         className="w-full p-4 flex items-center gap-3.5 hover:bg-white dark:hover:bg-slate-900 hover:shadow-xs transition text-left group"
                       >
-                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-indigo-700 text-white font-black text-base flex items-center justify-center shadow-xs flex-shrink-0 group-hover:scale-105 transition-transform">
+                        <div className="chat-user-avatar-list w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-indigo-700 text-white font-black text-base flex items-center justify-center shadow-xs flex-shrink-0 group-hover:scale-105 transition-transform">
                           {other?.displayName?.charAt(0) || 'U'}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -274,7 +274,7 @@ const FloatingChatWidget = () => {
       {/* Floating Widget Button (Bottom Right Corner) */}
       <button
         onClick={() => setIsOpen((o) => !o)}
-        className="fixed bottom-6 right-6 z-40 px-4 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-2xl shadow-indigo-600/40 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95 group"
+        className="chat-floating-trigger-btn fixed bottom-6 right-6 z-40 px-4 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-2xl shadow-indigo-600/40 flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95 group"
         aria-label="Open chat"
       >
         <div className="relative">

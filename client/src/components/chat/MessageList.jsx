@@ -24,7 +24,7 @@ const MessageList = ({ messages, currentUserId }) => {
             >
               <div className="flex items-end gap-1.5 max-w-[80%] sm:max-w-[70%]">
                 {!isMe && (
-                  <div className="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-[10px] font-bold flex items-center justify-center shrink-0">
+                  <div className="chat-message-avatar-other w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-[10px] font-bold flex items-center justify-center shrink-0">
                     {msg.senderId?.displayName?.charAt(0) || 'U'}
                   </div>
                 )}

@@ -208,6 +208,61 @@ html.theme-chocolate header {
   border-color: #DDD2C5 !important;
 }
 
+/* ── Logo & Brand (One bg color + Highlight Burnt Orange #CC5500) ── */
+html.theme-chocolate .navbar-logo-icon {
+  background: #CC5500 !important;
+  box-shadow: 0 4px 14px rgba(204, 85, 0, 0.35) !important;
+  color: #FFFDF7 !important;
+}
+
+html.theme-chocolate .navbar-logo-text {
+  background: linear-gradient(90deg, #4E342E 0%, #4E342E 36%, #CC5500 36%, #CC5500 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* ── Navbar Active & Focus States in Burnt Orange Shade ────── */
+html.theme-chocolate header a.bg-indigo-50\/80,
+html.theme-chocolate header a.text-indigo-600 {
+  color: #CC5500 !important;
+  background-color: rgba(204, 85, 0, 0.12) !important;
+}
+
+html.theme-chocolate header nav a:hover,
+html.theme-chocolate header button:hover {
+  color: #CC5500 !important;
+}
+
+html.theme-chocolate header a:focus,
+html.theme-chocolate header a:focus-visible,
+html.theme-chocolate header button:focus,
+html.theme-chocolate header button:focus-visible,
+html.theme-chocolate .focus\:ring-indigo-500:focus,
+html.theme-chocolate header *:focus,
+html.theme-chocolate *:focus-visible {
+  outline-color: #CC5500 !important;
+  border-color: #CC5500 !important;
+  --tw-ring-color: #CC5500 !important;
+  box-shadow: 0 0 0 2px rgba(204, 85, 0, 0.35) !important;
+}
+
+html.theme-chocolate header span.text-indigo-600 {
+  color: #CC5500 !important;
+  background-color: rgba(204, 85, 0, 0.12) !important;
+}
+
+/* ── Hero "Grow Together" Highlight ────────────────────────── */
+html.theme-chocolate .home-grow-together,
+html.theme-chocolate h1 span.bg-clip-text {
+  background-image: none !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: #CC5500 !important;
+  color: #CC5500 !important;
+}
+
 /* ── Cards, panels, surfaces ───────────────────────────────── */
 html.theme-chocolate .bg-white {
   background-color: #FFFDF7 !important;
@@ -263,7 +318,7 @@ html.theme-chocolate .text-slate-400 {
   color: #9E8E85 !important;
 }
 
-/* ── Burnt Orange accent — primary buttons, links, badges ───── */
+/* ── Primary actions, buttons, and badges ─────────────────── */
 html.theme-chocolate .bg-indigo-600 {
   background-color: #4E342E !important;
   color: #FFFDF7 !important;
@@ -286,6 +341,71 @@ html.theme-chocolate .bg-indigo-50 {
 html.theme-chocolate .border-indigo-200,
 html.theme-chocolate .border-indigo-100 {
   border-color: rgba(204, 85, 0, 0.25) !important;
+}
+
+/* ── Floating Message Widget Button & Hover in Burnt Orange ── */
+html.theme-chocolate .chat-floating-trigger-btn {
+  background-color: #4E342E !important;
+  color: #FFFDF7 !important;
+  box-shadow: 0 10px 25px -5px rgba(78, 52, 46, 0.5) !important;
+}
+
+html.theme-chocolate .chat-floating-trigger-btn:hover {
+  background-color: #CC5500 !important;
+  box-shadow: 0 15px 30px -5px rgba(204, 85, 0, 0.5) !important;
+  color: #FFFDF7 !important;
+}
+
+/* ── Message Top Section (Chat Drawer Header) in Burnt Orange ── */
+html.theme-chocolate .chat-drawer-header {
+  background-color: #CC5500 !important;
+  color: #FFFDF7 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+html.theme-chocolate .chat-drawer-header h3 {
+  color: #FFFDF7 !important;
+}
+
+html.theme-chocolate .chat-drawer-header .chat-header-subtitle,
+html.theme-chocolate .chat-drawer-header p {
+  color: rgba(255, 253, 247, 0.9) !important;
+}
+
+html.theme-chocolate .chat-drawer-header .chat-header-action-btn,
+html.theme-chocolate .chat-drawer-header button,
+html.theme-chocolate .chat-drawer-header a {
+  color: #FFFDF7 !important;
+}
+
+html.theme-chocolate .chat-drawer-header .chat-header-action-btn:hover,
+html.theme-chocolate .chat-drawer-header button:hover,
+html.theme-chocolate .chat-drawer-header a:hover {
+  background-color: #B34700 !important;
+  color: #FFFFFF !important;
+}
+
+/* ── Another Person's Chat Icon in Burnt Orange #CC5500 ─────── */
+/* In Chat Header */
+html.theme-chocolate .chat-drawer-header .chat-avatar-other {
+  background-color: #FFFDF7 !important;
+  border: 2px solid rgba(255, 253, 247, 0.9) !important;
+  color: #CC5500 !important;
+  font-weight: 900 !important;
+}
+
+/* In Message Bubble List */
+html.theme-chocolate .chat-message-avatar-other {
+  background-color: #CC5500 !important;
+  color: #FFFDF7 !important;
+  border: 1px solid rgba(204, 85, 0, 0.3) !important;
+  font-weight: 700 !important;
+}
+
+/* In Conversation Drawer List */
+html.theme-chocolate .chat-user-avatar-list {
+  background: #CC5500 !important;
+  color: #FFFDF7 !important;
 }
 
 /* ── Hover states ──────────────────────────────────────────── */
@@ -321,6 +441,16 @@ html.theme-chocolate textarea:focus,
 html.theme-chocolate select:focus {
   border-color: #CC5500 !important;
   box-shadow: 0 0 0 3px rgba(204, 85, 0, 0.2) !important;
+}
+
+/* ── Form send button ──────────────────────────────────────── */
+html.theme-chocolate form button[type="submit"] {
+  background-color: #CC5500 !important;
+  color: #FFFDF7 !important;
+}
+
+html.theme-chocolate form button[type="submit"]:hover {
+  background-color: #B34700 !important;
 }
 
 /* ── Status / feedback colors ──────────────────────────────── */
