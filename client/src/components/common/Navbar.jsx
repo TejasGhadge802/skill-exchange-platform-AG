@@ -18,6 +18,7 @@ import {
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import NotificationCenter from '../notifications/NotificationCenter';
+import ThemeSelector from './ThemeSelector';
 
 const Navbar = () => {
   const { currentUser, userProfile, logout } = useAuth();
@@ -107,15 +108,8 @@ const Navbar = () => {
 
           {/* Right Header Controls */}
           <div className="hidden md:flex items-center gap-3">
-            {/* Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-              title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              aria-label="Toggle theme"
-            >
-              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
+            {/* Theme Dropdown Selector */}
+            <ThemeSelector />
 
             {currentUser ? (
               <>
@@ -170,14 +164,8 @@ const Navbar = () => {
 
           {/* Mobile menu toggle */}
           <div className="flex md:hidden items-center gap-2">
-            {/* Mobile Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-              aria-label="Toggle theme"
-            >
-              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
+            {/* Mobile Theme Dropdown Selector */}
+            <ThemeSelector align="right" />
             {currentUser && <NotificationCenter />}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
