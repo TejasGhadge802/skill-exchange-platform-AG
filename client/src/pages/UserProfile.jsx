@@ -112,7 +112,7 @@ const UserProfile = () => {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
             {/* Avatar */}
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-tr from-indigo-600 via-indigo-700 to-violet-700 text-white font-black text-3xl sm:text-4xl flex items-center justify-center shadow-lg shadow-indigo-600/20 flex-shrink-0">
+            <div className="profile-user-avatar w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-tr from-indigo-600 via-indigo-700 to-violet-700 text-white font-black text-3xl sm:text-4xl flex items-center justify-center shadow-lg shadow-indigo-600/20 flex-shrink-0">
               {profileUser.displayName?.charAt(0) || 'U'}
             </div>
 

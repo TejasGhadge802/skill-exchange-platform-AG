@@ -321,19 +321,19 @@ const ConversationView = () => {
         {/* Collaborator Details & Quick Chat Launcher (1 col) */}
         <div className="space-y-6">
           {/* Quick Chat Launcher Card */}
-          <div className="bg-gradient-to-br from-indigo-600 to-violet-700 rounded-3xl p-6 text-white shadow-lg shadow-indigo-600/10 space-y-4">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center">
+          <div className="workspace-quick-chat-card bg-gradient-to-br from-indigo-600 to-violet-700 rounded-3xl p-6 text-white shadow-lg shadow-indigo-600/10 space-y-4">
+            <div className="quick-chat-icon-box w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center">
               <MessageSquare className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="font-black text-base text-white">Direct Real-Time Chat</h3>
-              <p className="text-xs text-indigo-100 mt-1 leading-relaxed">
+              <h3 className="quick-chat-title font-black text-base text-white">Direct Real-Time Chat</h3>
+              <p className="quick-chat-desc text-xs text-indigo-100 mt-1 leading-relaxed">
                 Need to discuss deliverables, files, or milestones? Open the half-screen chat drawer anytime.
               </p>
             </div>
             <button
               onClick={openHalfScreenChat}
-              className="w-full py-2.5 bg-white text-indigo-600 hover:bg-indigo-50 font-black text-xs rounded-xl transition shadow-xs flex items-center justify-center gap-2"
+              className="quick-chat-btn w-full py-2.5 bg-white text-indigo-600 hover:bg-indigo-50 font-black text-xs rounded-xl transition shadow-xs flex items-center justify-center gap-2"
             >
               <MessageSquare className="w-4 h-4" />
               Open Workspace Chat
@@ -349,7 +349,7 @@ const ConversationView = () => {
               to={`/users/${otherParticipant?._id}`}
               className="flex items-center gap-3.5 group hover:opacity-90 transition"
             >
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-indigo-700 font-bold flex items-center justify-center text-white text-lg shadow-xs group-hover:scale-105 transition-transform shrink-0">
+              <div className="collaborator-avatar w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-indigo-700 font-bold flex items-center justify-center text-white text-lg shadow-xs group-hover:scale-105 transition-transform shrink-0">
                 {otherParticipant?.displayName?.charAt(0) || 'U'}
               </div>
               <div className="min-w-0">

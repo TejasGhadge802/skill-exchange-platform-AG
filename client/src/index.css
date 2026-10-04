@@ -478,3 +478,48 @@ html.theme-chocolate ::selection {
   background-color: #CC5500 !important;
   color: #FFFFFF !important;
 }
+
+/* ── Direct Real-Time Chat Card in Task Check / Workspace ─── */
+html.theme-chocolate .workspace-quick-chat-card {
+  background: #CC5500 !important;
+  background-image: none !important;
+  box-shadow: 0 12px 28px -6px rgba(204, 85, 0, 0.4) !important;
+  color: #FFFDF7 !important;
+}
+
+html.theme-chocolate .workspace-quick-chat-card .quick-chat-title,
+html.theme-chocolate .workspace-quick-chat-card h3 {
+  color: #FFFFFF !important;
+}
+
+html.theme-chocolate .workspace-quick-chat-card .quick-chat-desc,
+html.theme-chocolate .workspace-quick-chat-card p {
+  color: rgba(255, 253, 247, 0.95) !important;
+}
+
+html.theme-chocolate .workspace-quick-chat-card .quick-chat-icon-box {
+  background-color: rgba(255, 255, 255, 0.22) !important;
+  color: #FFFFFF !important;
+}
+
+html.theme-chocolate .workspace-quick-chat-card .quick-chat-btn {
+  background-color: #FFFDF7 !important;
+  color: #CC5500 !important;
+  font-weight: 800 !important;
+}
+
+html.theme-chocolate .workspace-quick-chat-card .quick-chat-btn:hover {
+  background-color: #F8F4E7 !important;
+  color: #B34700 !important;
+}
+
+/* ── Dashboard & Profile User Avatar in Burnt Orange #CC5500 ─ */
+html.theme-chocolate .dashboard-user-avatar,
+html.theme-chocolate .profile-user-avatar,
+html.theme-chocolate .collaborator-avatar {
+  background: #CC5500 !important;
+  background-image: none !important;
+  color: #FFFDF7 !important;
+  box-shadow: 0 6px 18px rgba(204, 85, 0, 0.35) !important;
+}
+

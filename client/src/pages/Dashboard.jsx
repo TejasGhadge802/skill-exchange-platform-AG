@@ -83,7 +83,7 @@ const Dashboard = () => {
       {/* Top Banner with Profile & Switcher */}
       <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white font-black text-2xl flex items-center justify-center shadow-md shadow-indigo-500/20">
+          <div className="dashboard-user-avatar w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white font-black text-2xl flex items-center justify-center shadow-md shadow-indigo-500/20">
             {userProfile?.displayName?.charAt(0) || 'U'}
           </div>
           <div>
