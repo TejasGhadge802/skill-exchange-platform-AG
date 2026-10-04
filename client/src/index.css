@@ -23,4 +23,114 @@
   top: 0;
 }
 
+/* ==========================================================================
+   COBALT THEME
+   Background: #FFFFFF | Card/Surface: #F5F6FA | Primary: #2C3480
+   Primary Hover: #1E245A | Text: #111111 | Secondary Text: #5F6368 | Border: #D9DCE8
+   ========================================================================== */
+html.theme-cobalt {
+  color-scheme: light;
+}
 
+html.theme-cobalt body {
+  background-color: #FFFFFF !important;
+  color: #111111 !important;
+}
+
+/* Surfaces and Cards */
+html.theme-cobalt .bg-white,
+html.theme-cobalt .bg-slate-50,
+html.theme-cobalt [class*="dark:bg-slate-900"],
+html.theme-cobalt [class*="dark:bg-slate-950"] {
+  background-color: #F5F6FA !important;
+}
+
+/* Navbar / Sticky Header */
+html.theme-cobalt header {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: #D9DCE8 !important;
+}
+
+/* Primary actions, buttons, and links */
+html.theme-cobalt .bg-indigo-600,
+html.theme-cobalt .bg-indigo-700,
+html.theme-cobalt [class*="dark:bg-indigo-600"] {
+  background-color: #2C3480 !important;
+  color: #FFFFFF !important;
+}
+
+html.theme-cobalt .hover\:bg-indigo-700:hover,
+html.theme-cobalt .hover\:bg-indigo-600:hover,
+html.theme-cobalt [class*="dark:hover:bg-indigo-700"]:hover {
+  background-color: #1E245A !important;
+}
+
+html.theme-cobalt .text-indigo-600,
+html.theme-cobalt .text-indigo-700,
+html.theme-cobalt [class*="dark:text-indigo-400"],
+html.theme-cobalt [class*="dark:text-indigo-300"] {
+  color: #2C3480 !important;
+}
+
+/* Soft primary badge backgrounds */
+html.theme-cobalt .bg-indigo-50,
+html.theme-cobalt [class*="dark:bg-indigo-950"],
+html.theme-cobalt [class*="dark:bg-indigo-900"] {
+  background-color: rgba(44, 52, 128, 0.08) !important;
+}
+
+html.theme-cobalt .border-indigo-200,
+html.theme-cobalt .border-indigo-100,
+html.theme-cobalt [class*="dark:border-indigo-800"],
+html.theme-cobalt [class*="dark:border-indigo-900"] {
+  border-color: rgba(44, 52, 128, 0.25) !important;
+}
+
+/* Typography */
+html.theme-cobalt h1,
+html.theme-cobalt h2,
+html.theme-cobalt h3,
+html.theme-cobalt h4,
+html.theme-cobalt h5,
+html.theme-cobalt h6,
+html.theme-cobalt .text-slate-900,
+html.theme-cobalt .text-slate-950,
+html.theme-cobalt [class*="dark:text-white"],
+html.theme-cobalt [class*="dark:text-slate-100"],
+html.theme-cobalt [class*="dark:text-slate-200"] {
+  color: #111111 !important;
+}
+
+html.theme-cobalt p,
+html.theme-cobalt .text-slate-600,
+html.theme-cobalt .text-slate-500,
+html.theme-cobalt .text-slate-400,
+html.theme-cobalt [class*="dark:text-slate-300"],
+html.theme-cobalt [class*="dark:text-slate-400"],
+html.theme-cobalt [class*="dark:text-slate-500"] {
+  color: #5F6368 !important;
+}
+
+/* Borders */
+html.theme-cobalt .border-slate-200,
+html.theme-cobalt .border-slate-100,
+html.theme-cobalt .border-slate-300,
+html.theme-cobalt [class*="dark:border-slate-800"],
+html.theme-cobalt [class*="dark:border-slate-700"] {
+  border-color: #D9DCE8 !important;
+}
+
+/* Form Inputs */
+html.theme-cobalt input,
+html.theme-cobalt textarea,
+html.theme-cobalt select {
+  background-color: #FFFFFF !important;
+  color: #111111 !important;
+  border-color: #D9DCE8 !important;
+}
+html.theme-cobalt input:focus,
+html.theme-cobalt textarea:focus,
+html.theme-cobalt select:focus {
+  border-color: #2C3480 !important;
+  outline-color: #2C3480 !important;
+}
