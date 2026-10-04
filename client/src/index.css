@@ -134,3 +134,117 @@ html.theme-cobalt select:focus {
   border-color: #2C3480 !important;
   outline-color: #2C3480 !important;
 }
+
+/* ==========================================================================
+   CHOCOLATE THEME
+   Background: #F8F4E7 (Cream) | Surface/Card: #FFFDF7 | Primary: #4E342E
+   Accent: #CC5500 (Burnt Orange) | Text: #2E211D | Secondary Text: #6F625C | Border: #DDD2C5
+   ========================================================================== */
+html.theme-chocolate {
+  color-scheme: light;
+}
+
+html.theme-chocolate body {
+  background-color: #F8F4E7 !important;
+  color: #2E211D !important;
+}
+
+/* Surfaces and Cards */
+html.theme-chocolate .bg-white,
+html.theme-chocolate .bg-slate-50,
+html.theme-chocolate [class*="dark:bg-slate-900"],
+html.theme-chocolate [class*="dark:bg-slate-950"] {
+  background-color: #FFFDF7 !important;
+}
+
+/* Navbar / Sticky Header */
+html.theme-chocolate header {
+  background-color: rgba(248, 244, 231, 0.95) !important;
+  border-color: #DDD2C5 !important;
+}
+
+/* Primary actions, buttons, and badges */
+html.theme-chocolate .bg-indigo-600,
+html.theme-chocolate .bg-indigo-700,
+html.theme-chocolate [class*="dark:bg-indigo-600"] {
+  background-color: #4E342E !important;
+  color: #FFFDF7 !important;
+}
+
+html.theme-chocolate .hover\:bg-indigo-700:hover,
+html.theme-chocolate .hover\:bg-indigo-600:hover,
+html.theme-chocolate [class*="dark:hover:bg-indigo-700"]:hover {
+  background-color: #3E2723 !important;
+}
+
+/* Accent text and links */
+html.theme-chocolate .text-indigo-600,
+html.theme-chocolate .text-indigo-700,
+html.theme-chocolate [class*="dark:text-indigo-400"],
+html.theme-chocolate [class*="dark:text-indigo-300"] {
+  color: #CC5500 !important;
+}
+
+/* Soft accent / burnt orange badge backgrounds */
+html.theme-chocolate .bg-indigo-50,
+html.theme-chocolate [class*="dark:bg-indigo-950"],
+html.theme-chocolate [class*="dark:bg-indigo-900"] {
+  background-color: rgba(204, 85, 0, 0.1) !important;
+}
+
+html.theme-chocolate .border-indigo-200,
+html.theme-chocolate .border-indigo-100,
+html.theme-chocolate [class*="dark:border-indigo-800"],
+html.theme-chocolate [class*="dark:border-indigo-900"] {
+  border-color: rgba(204, 85, 0, 0.25) !important;
+}
+
+/* Typography */
+html.theme-chocolate h1,
+html.theme-chocolate h2,
+html.theme-chocolate h3,
+html.theme-chocolate h4,
+html.theme-chocolate h5,
+html.theme-chocolate h6,
+html.theme-chocolate .text-slate-900,
+html.theme-chocolate .text-slate-950,
+html.theme-chocolate [class*="dark:text-white"],
+html.theme-chocolate [class*="dark:text-slate-100"],
+html.theme-chocolate [class*="dark:text-slate-200"] {
+  color: #2E211D !important;
+}
+
+html.theme-chocolate p,
+html.theme-chocolate .text-slate-600,
+html.theme-chocolate .text-slate-500,
+html.theme-chocolate .text-slate-400,
+html.theme-chocolate [class*="dark:text-slate-300"],
+html.theme-chocolate [class*="dark:text-slate-400"],
+html.theme-chocolate [class*="dark:text-slate-500"] {
+  color: #6F625C !important;
+}
+
+/* Borders */
+html.theme-chocolate .border-slate-200,
+html.theme-chocolate .border-slate-100,
+html.theme-chocolate .border-slate-300,
+html.theme-chocolate [class*="dark:border-slate-800"],
+html.theme-chocolate [class*="dark:border-slate-700"] {
+  border-color: #DDD2C5 !important;
+}
+
+/* Form Inputs */
+html.theme-chocolate input,
+html.theme-chocolate textarea,
+html.theme-chocolate select {
+  background-color: #FFFDF7 !important;
+  color: #2E211D !important;
+  border-color: #DDD2C5 !important;
+}
+html.theme-chocolate input:focus,
+html.theme-chocolate textarea:focus,
+html.theme-chocolate select:focus {
+  border-color: #CC5500 !important;
+  outline-color: #CC5500 !important;
+}
+
