@@ -23,7 +23,6 @@ const ThemeSelector = ({ className = '', align = 'right' }) => {
         return <Sun className={size} />;
       case 'dark':
         return <Moon className={size} />;
-      case 'cobalt':
       case 'chocolate':
       default:
         return <Palette className={size} />;
