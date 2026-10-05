@@ -1,6 +1,35 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Sun, Moon, Palette, Check } from 'lucide-react';
+import { Sun, Moon, Check } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
+
+// Custom Chocolate Bar Icon designed with theme colors (#4E342E & #CC5500)
+const ChocolateIcon = ({ className = 'w-4 h-4' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    aria-hidden="true"
+  >
+    {/* Dark Chocolate Bar Base */}
+    <rect x="4" y="2.5" width="16" height="19" rx="2.5" fill="#4E342E" />
+
+    {/* Scored Chocolate Chunks */}
+    <rect x="5.5" y="4" width="5.5" height="4.5" rx="1" fill="#795548" />
+    <rect x="13" y="4" width="5.5" height="4.5" rx="1" fill="#795548" />
+
+    <rect x="5.5" y="9.5" width="5.5" height="4.5" rx="1" fill="#795548" />
+    <rect x="13" y="9.5" width="5.5" height="4.5" rx="1" fill="#795548" />
+
+    {/* Burnt Orange Peeled Foil Wrapper */}
+    <path
+      d="M4 14.5 L7.5 13 L12 14.5 L16.5 13 L20 14.5 V19 C20 20.38 18.88 21.5 17.5 21.5 H6.5 C5.12 21.5 4 20.38 4 19 Z"
+      fill="#CC5500"
+    />
+    {/* Foil Accent Band */}
+    <rect x="6.5" y="16.5" width="11" height="1.8" rx="0.5" fill="#FFFDF7" opacity="0.9" />
+  </svg>
+);
 
 const ThemeSelector = ({ className = '', align = 'right' }) => {
   const { theme, setTheme, themes } = useTheme();
@@ -25,7 +54,7 @@ const ThemeSelector = ({ className = '', align = 'right' }) => {
         return <Moon className={size} />;
       case 'chocolate':
       default:
-        return <Palette className={size} />;
+        return <ChocolateIcon className={size} />;
     }
   };
 
@@ -67,11 +96,16 @@ const ThemeSelector = ({ className = '', align = 'right' }) => {
                 }`}
               >
                 <div className="flex items-center gap-2.5">
-                  <span
-                    className="w-3.5 h-3.5 rounded-full border shadow-xs shrink-0"
-                    style={{ backgroundColor: t.dot, borderColor: t.border }}
-                  />
+                  {t.id === 'chocolate' ? (
+                    <ChocolateIcon className="w-4 h-4 shrink-0" />
+                  ) : (
+                    <span
+                      className="w-3.5 h-3.5 rounded-full border shadow-xs shrink-0"
+                      style={{ backgroundColor: t.dot, borderColor: t.border }}
+                    />
+                  )}
                   <span>{t.name}</span>
+                  {t.id === 'chocolate' && <span className="text-xs leading-none">🍫</span>}
                 </div>
                 {isSelected && <Check className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />}
               </button>
