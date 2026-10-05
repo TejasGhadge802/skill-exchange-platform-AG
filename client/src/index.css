@@ -179,6 +179,28 @@ html.theme-chocolate .border-indigo-100 {
   border-color: rgba(204, 85, 0, 0.25) !important;
 }
 
+/* ── Task & Workshop Card Hover in Chocolate Theme ────────── */
+html.theme-chocolate .task-card:hover,
+html.theme-chocolate .class-card:hover,
+html.theme-chocolate .hover\:border-indigo-200:hover,
+html.theme-chocolate [class*="hover:border-indigo"]:hover {
+  border-color: #CC5500 !important;
+  box-shadow: 0 10px 25px -5px rgba(204, 85, 0, 0.18), 0 8px 10px -6px rgba(204, 85, 0, 0.1) !important;
+}
+
+html.theme-chocolate .task-card:hover h3,
+html.theme-chocolate .class-card:hover h3,
+html.theme-chocolate .group:hover [class*="group-hover:text-indigo"],
+html.theme-chocolate [class*="group-hover:text-indigo"]:hover {
+  color: #CC5500 !important;
+}
+
+html.theme-chocolate .task-card a[href*="/tasks/"]:hover,
+html.theme-chocolate .class-card a[href*="/classes/"]:hover {
+  background-color: rgba(204, 85, 0, 0.15) !important;
+  color: #CC5500 !important;
+}
+
 /* ── Floating Message Widget Button & Hover in Burnt Orange ── */
 html.theme-chocolate .chat-floating-trigger-btn {
   background-color: #4E342E !important;

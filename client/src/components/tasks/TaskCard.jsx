@@ -5,7 +5,7 @@ import Badge from '../common/Badge';
 
 const TaskCard = ({ task }) => {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm hover:shadow-md hover:border-indigo-200 dark:hover:border-indigo-700 transition flex flex-col justify-between">
+    <div className="task-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm hover:shadow-md hover:border-indigo-200 dark:hover:border-indigo-700 transition flex flex-col justify-between">
       <div className="space-y-3">
         <div className="flex items-start justify-between gap-2">
           <Badge variant={task.status} />
