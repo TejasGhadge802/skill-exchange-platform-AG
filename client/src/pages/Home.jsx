@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Sparkles,
+  Handshake,
   ArrowRight,
   ShieldCheck,
   Zap,
@@ -46,7 +46,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-6">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/70 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-bold">
-              <Sparkles className="w-3.5 h-3.5" />
+              <Handshake className="w-3.5 h-3.5" />
               <span>Skill & Service Exchange Marketplace</span>
             </div>
 
