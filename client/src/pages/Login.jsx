@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Lock, Mail, Handshake, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Alert from '../components/common/Alert';
@@ -52,7 +53,12 @@ const Login = () => {
 
   return (
     <div className="min-h-[75vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, y: 18 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="max-w-md w-full space-y-8 bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none"
+      >
         <div className="text-center space-y-2">
           <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white mx-auto shadow-md shadow-indigo-500/20">
             <Handshake className="w-6 h-6" />
@@ -151,7 +157,7 @@ const Login = () => {
             Sign up
           </Link>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };

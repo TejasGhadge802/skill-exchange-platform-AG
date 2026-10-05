@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SocketProvider } from './context/SocketContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -8,6 +9,7 @@ import Footer from './components/common/Footer';
 import SkipToContent from './components/common/SkipToContent';
 import LoadingSpinner from './components/common/LoadingSpinner';
 import FloatingChatWidget from './components/chat/FloatingChatWidget';
+import PageTransition from './components/common/PageTransition';
 
 // Pages
 import Home from './pages/Home';
@@ -60,80 +62,84 @@ const AdminRoute = ({ children }) => {
 };
 
 function AppContent() {
+  const location = useLocation();
+
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-indigo-500 selection:text-white transition-colors duration-300">
       <SkipToContent />
       <Navbar />
 
       <main id="main-content" className="flex-1 focus:outline-none" tabIndex={-1}>
-        <Routes>
-          {/* Public Marketplace & Landing Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/tasks" element={<Tasks />} />
-          <Route path="/tasks/:id" element={<TaskDetail />} />
-          <Route path="/classes" element={<Classes />} />
-          <Route path="/classes/:id" element={<ClassDetail />} />
-          <Route path="/users/:id" element={<UserProfile />} />
-          <Route path="/profile/:id" element={<UserProfile />} />
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            {/* Public Marketplace & Landing Routes */}
+            <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+            <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
+            <Route path="/register" element={<PageTransition><Register /></PageTransition>} />
+            <Route path="/forgot-password" element={<PageTransition><ForgotPassword /></PageTransition>} />
+            <Route path="/tasks" element={<PageTransition><Tasks /></PageTransition>} />
+            <Route path="/tasks/:id" element={<PageTransition><TaskDetail /></PageTransition>} />
+            <Route path="/classes" element={<PageTransition><Classes /></PageTransition>} />
+            <Route path="/classes/:id" element={<PageTransition><ClassDetail /></PageTransition>} />
+            <Route path="/users/:id" element={<PageTransition><UserProfile /></PageTransition>} />
+            <Route path="/profile/:id" element={<PageTransition><UserProfile /></PageTransition>} />
 
-          {/* Protected Member Routes */}
-          <Route
-            path="/tasks/create"
-            element={
-              <ProtectedRoute>
-                <CreateTask />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/tasks/:id/edit"
-            element={
-              <ProtectedRoute>
-                <EditTask />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/conversations/:id"
-            element={
-              <ProtectedRoute>
-                <ConversationView />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/classes/create"
-            element={
-              <ProtectedRoute>
-                <CreateClass />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
+            {/* Protected Member Routes */}
+            <Route
+              path="/tasks/create"
+              element={
+                <ProtectedRoute>
+                  <PageTransition><CreateTask /></PageTransition>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tasks/:id/edit"
+              element={
+                <ProtectedRoute>
+                  <PageTransition><EditTask /></PageTransition>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/conversations/:id"
+              element={
+                <ProtectedRoute>
+                  <PageTransition><ConversationView /></PageTransition>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/classes/create"
+              element={
+                <ProtectedRoute>
+                  <PageTransition><CreateClass /></PageTransition>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <PageTransition><Dashboard /></PageTransition>
+                </ProtectedRoute>
+              }
+            />
 
-          {/* Protected Admin Routes */}
-          <Route
-            path="/admin/moderation"
-            element={
-              <AdminRoute>
-                <AdminModeration />
-              </AdminRoute>
-            }
-          />
+            {/* Protected Admin Routes */}
+            <Route
+              path="/admin/moderation"
+              element={
+                <AdminRoute>
+                  <PageTransition><AdminModeration /></PageTransition>
+                </AdminRoute>
+              }
+            />
 
-          {/* 404 Catch-All */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            {/* 404 Catch-All */}
+            <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+          </Routes>
+        </AnimatePresence>
       </main>
 
       <Footer />
@@ -153,4 +159,3 @@ export default function App() {
     </ThemeProvider>
   );
 }
-

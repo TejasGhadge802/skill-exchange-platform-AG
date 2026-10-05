@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BookOpen, PlusCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import api from '../services/api';
 import ClassCard from '../components/classes/ClassCard';
 import ClassFilter from '../components/classes/ClassFilter';
@@ -112,11 +113,23 @@ const Classes = () => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ staggerChildren: 0.08 }}
+            >
               {classes.map((cls) => (
-                <ClassCard key={cls._id} classItem={cls} />
+                <motion.div
+                  key={cls._id}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35 }}
+                >
+                  <ClassCard classItem={cls} />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
 
           {/* Pagination */}

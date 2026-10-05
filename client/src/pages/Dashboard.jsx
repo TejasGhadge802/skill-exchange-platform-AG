@@ -14,6 +14,7 @@ import {
   Settings,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import Badge from '../components/common/Badge';
@@ -81,7 +82,12 @@ const Dashboard = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Top Banner with Profile & Switcher */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
+      >
         <div className="flex items-center gap-4">
           <div className="dashboard-user-avatar w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white font-black text-2xl flex items-center justify-center shadow-md shadow-indigo-500/20">
             {userProfile?.displayName?.charAt(0) || 'U'}
@@ -135,7 +141,7 @@ const Dashboard = () => {
             <Settings className="w-3.5 h-3.5" /> Profile
           </button>
         </div>
-      </div>
+      </motion.div>
 
       {/* Profile Settings Tab */}
       {activeTab === 'profile' && (

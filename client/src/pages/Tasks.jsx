@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Briefcase, PlusCircle, ArrowUpDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import api from '../services/api';
 import TaskCard from '../components/tasks/TaskCard';
 import TaskFilter from '../components/tasks/TaskFilter';
@@ -137,11 +138,23 @@ const Tasks = () => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ staggerChildren: 0.08 }}
+            >
               {tasks.map((task) => (
-                <TaskCard key={task._id} task={task} />
+                <motion.div
+                  key={task._id}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35 }}
+                >
+                  <TaskCard task={task} />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
 
           {/* Pagination */}
