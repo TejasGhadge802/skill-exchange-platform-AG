@@ -76,53 +76,53 @@ const Register = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">Full Name</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Full Name</label>
             <div className="relative">
-              <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+              <User className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3.5 top-3" />
               <input
                 type="text"
                 required
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 placeholder="Jane Doe"
-                className="w-full pl-10 pr-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-2.5 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-colors"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">Email Address</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Email Address</label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+              <Mail className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3.5 top-3" />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@example.com"
-                className="w-full pl-10 pr-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-2.5 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-colors"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">Password</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Password</label>
             <div className="relative">
-              <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+              <Lock className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3.5 top-3" />
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-2.5 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-colors"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-2">
-              Primary Role <span className="font-normal text-slate-400">(hover to learn more)</span>
+            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">
+              Primary Role <span className="font-normal text-slate-400 dark:text-slate-500">(hover to learn more)</span>
             </label>
             <div className="space-y-2">
               {[
@@ -152,22 +152,22 @@ const Register = () => {
                 const isRevealed = hoveredRole === id;
                 const colorMap = {
                   indigo: {
-                    border: isActive ? 'border-indigo-500 bg-indigo-50' : 'border-slate-200 hover:border-indigo-300 hover:bg-indigo-50/40',
-                    icon: isActive ? 'bg-indigo-600 text-white' : 'bg-indigo-100 text-indigo-600',
-                    title: isActive ? 'text-indigo-700' : 'text-slate-800',
-                    desc: 'text-indigo-600/80',
+                    border: isActive ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-950/40 dark:border-indigo-500' : 'border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700 hover:bg-indigo-50/40 dark:hover:bg-indigo-950/20',
+                    icon: isActive ? 'bg-indigo-600 text-white' : 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400',
+                    title: isActive ? 'text-indigo-700 dark:text-indigo-300' : 'text-slate-800 dark:text-slate-200',
+                    desc: 'text-indigo-600/80 dark:text-indigo-300/80',
                   },
                   emerald: {
-                    border: isActive ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-emerald-300 hover:bg-emerald-50/40',
-                    icon: isActive ? 'bg-emerald-600 text-white' : 'bg-emerald-100 text-emerald-600',
-                    title: isActive ? 'text-emerald-700' : 'text-slate-800',
-                    desc: 'text-emerald-700/80',
+                    border: isActive ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 dark:border-emerald-500' : 'border-slate-200 dark:border-slate-800 hover:border-emerald-300 dark:hover:border-emerald-700 hover:bg-emerald-50/40 dark:hover:bg-emerald-950/20',
+                    icon: isActive ? 'bg-emerald-600 text-white' : 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400',
+                    title: isActive ? 'text-emerald-700 dark:text-emerald-300' : 'text-slate-800 dark:text-slate-200',
+                    desc: 'text-emerald-700/80 dark:text-emerald-300/80',
                   },
                   amber: {
-                    border: isActive ? 'border-amber-500 bg-amber-50' : 'border-slate-200 hover:border-amber-300 hover:bg-amber-50/40',
-                    icon: isActive ? 'bg-amber-500 text-white' : 'bg-amber-100 text-amber-600',
-                    title: isActive ? 'text-amber-700' : 'text-slate-800',
-                    desc: 'text-amber-700/80',
+                    border: isActive ? 'border-amber-500 bg-amber-50 dark:bg-amber-950/40 dark:border-amber-500' : 'border-slate-200 dark:border-slate-800 hover:border-amber-300 dark:hover:border-amber-700 hover:bg-amber-50/40 dark:hover:bg-amber-950/20',
+                    icon: isActive ? 'bg-amber-500 text-white' : 'bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400',
+                    title: isActive ? 'text-amber-700 dark:text-amber-300' : 'text-slate-800 dark:text-slate-200',
+                    desc: 'text-amber-700/80 dark:text-amber-300/80',
                   },
                 };
                 const c = colorMap[color];
@@ -211,10 +211,10 @@ const Register = () => {
 
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-slate-200"></div>
+            <div className="w-full border-t border-slate-200 dark:border-slate-800"></div>
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-slate-400 font-semibold">Or sign up with</span>
+            <span className="bg-white dark:bg-slate-900 px-2 text-slate-400 dark:text-slate-500 font-semibold">Or sign up with</span>
           </div>
         </div>
 
@@ -222,7 +222,7 @@ const Register = () => {
           type="button"
           onClick={handleGoogleSignUp}
           disabled={loading}
-          className="w-full py-2.5 px-4 text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl shadow-2xs transition flex items-center justify-center gap-3"
+          className="w-full py-2.5 px-4 text-sm font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/60 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xs transition flex items-center justify-center gap-3"
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24">
             <path
@@ -245,9 +245,9 @@ const Register = () => {
           Sign Up with Google
         </button>
 
-        <p className="text-center text-xs text-slate-500 pt-2">
+        <p className="text-center text-xs text-slate-500 dark:text-slate-400 pt-2">
           Already have an account?{' '}
-          <Link to="/login" className="font-bold text-indigo-600 hover:text-indigo-800">
+          <Link to="/login" className="font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300">
             Sign in
           </Link>
         </p>
