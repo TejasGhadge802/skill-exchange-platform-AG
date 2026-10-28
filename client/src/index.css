@@ -52,7 +52,7 @@ html.theme-chocolate .navbar-logo-icon {
 }
 
 html.theme-chocolate .navbar-logo-text {
-  background: linear-gradient(90deg, #4E342E 0%, #4E342E 36%, #CC5500 36%, #CC5500 100%) !important;
+  background: linear-gradient(to right, #4E342E 0%, #7C3F2B 35%, #CC5500 85%) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
